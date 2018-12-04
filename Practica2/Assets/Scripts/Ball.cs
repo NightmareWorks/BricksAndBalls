@@ -15,6 +15,14 @@ public class Ball : MonoBehaviour {
 	}*/
 
     public void startMove() {
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(0,50));
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(5,50));
+    }
+
+    public void stop() {
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+    }
+
+    public void moveToPoint(float x, float y)
+    {
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BallSpawner : MonoBehaviour {
     public GameObject ball;
     public int numBalls;
+    float posX, posY;
     // Use this for initialization
     void Start () {
         //ball1 = Instantiate(ball);
@@ -14,7 +15,9 @@ public class BallSpawner : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
+
+
         //Intento chusco
         if (Input.GetKeyUp(KeyCode.C))
         {
@@ -24,7 +27,7 @@ public class BallSpawner : MonoBehaviour {
         {
             //ball2.GetComponent<Ball>().startMove();
         }
-    }
+    }*/
 
     IEnumerator spawnBalls()
     {
@@ -32,8 +35,9 @@ public class BallSpawner : MonoBehaviour {
         {
             GameObject actB = Instantiate(ball);
             actB.GetComponent<Ball>().startMove();
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.05f);
         }
+        gameObject.SetActive(false);
     }
 
 
