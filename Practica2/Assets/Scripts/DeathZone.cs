@@ -4,31 +4,42 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour {
 
-	// Use this for initialization
-	/*void Start () {
+
+
+    // Use this for initialization
+    /*void Start () {
 		
 	}*/
-	
-	// Update is called once per frame
-	/*void Update () {
+
+    // Update is called once per frame
+    /*void Update () {
 		
 	}*/
+    public void init(BallSink bs) {
+        _bSink = bs;
+    }
+
+    public void llegaBola() {
+        _bSink.setNumBalls(_bSink.getNumBalls() + 1);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject thisBall = collision.gameObject;
-        if (firstOne) {
-            posX = collision.gameObject.transform.position.x;
-            posY = collision.gameObject.transform.position.y;
+        Ball thisBall = collision.gameObject.GetComponent<Ball>();
+        if (firstOne)
+        {
+            _bSink.setPos(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
+            _bSink.setNumBalls(1);
+            _bSink.show();
+            Destroy(thisBall.gameObject);
             firstOne = false;
         }
-        //Le dice a la bola que se pare en esa posición
-        collision.gameObject.GetComponent<Ball>().stop();
-        //Ahora se tendría que mover cada bola al x y
-        Debug.Log(posX);
-
+        else {
+            thisBall.stop();
+            thisBall.moveToPoint(_bSink.getPos(), 10, llegaBola);
+        }
     }
 
-    public float posX, posY;
     public bool firstOne = true;
+    private BallSink _bSink;
 }

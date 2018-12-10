@@ -6,23 +6,42 @@ public class Ball : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
-	}
+    /*void Start () {
+    }*/
 
     // Update is called once per frame
     /*void Update () {
 		
 	}*/
+    public void init() {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
-    public void startMove() {
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(5,50));
+    public void startMove(Vector2 posIni, Vector2 speed) {
+        transform.position/*.Set(posIni.x, posIni.y, 0);*/
+            = new Vector3(posIni.x, posIni.y, 0);
+        rb.AddForce(/*new Vector2(5,50)*/speed);
     }
 
     public void stop() {
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
     }
 
-    public void moveToPoint(float x, float y)
+    public void moveToPoint(Vector2 position, uint numPasos, System.Action callback = null)
     {
+        StartCoroutine(moveToCoroutine(position, numPasos, callback));
     }
+
+    //A este metodo se le puede pasar un Callback para que lo lance cuando haya terminado
+    private IEnumerator moveToCoroutine(Vector2 position, uint numPasos, System.Action callback) {
+        Vector2 moveTo = new Vector2((position.x - transform.position.x) / numPasos, (position.y - transform.position.y)/numPasos);
+        for (int i = 0; i < numPasos; i++) {
+            transform.position = new Vector3(transform.position.x + moveTo.x, transform.position.y + moveTo.y, 0);
+            yield return new WaitForSeconds(.01f);
+        }
+        callback();
+        Destroy(gameObject);
+    }
+
+    private Rigidbody2D rb;
 }
