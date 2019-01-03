@@ -6,6 +6,7 @@ public class LevelManager : MonoBehaviour {
     public BallSpawner bSpawn;
     public BallSink bSink;
     public DeathZone dZone;
+    public Advertising adv;
 
     private uint _numBalls;
 
@@ -18,6 +19,7 @@ public class LevelManager : MonoBehaviour {
         _numBalls = 20;
         bSpawn.setLaunchPos(0, -6);
         bSpawn.spawnBalls(_numBalls);
+        adv.ShowRewardedAd();
 	}
 	
 	// Update is called once per frame

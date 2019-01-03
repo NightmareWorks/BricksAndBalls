@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
-
+/*
 public class ReadMap  {
     public Block[][] loadMap(string ruta) {
         List<Block> _blocks = new List<Block>();
@@ -58,3 +58,4 @@ public class ReadMap  {
     }
 
 }
+*/

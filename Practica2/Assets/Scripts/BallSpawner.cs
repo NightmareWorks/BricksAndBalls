@@ -44,6 +44,7 @@ public class BallSpawner : MonoBehaviour {
             actB.init();
             actB.startMove(new Vector2(posX,posY),speed);
             yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
         }
         gameObject.SetActive(false);
     }

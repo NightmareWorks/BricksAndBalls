@@ -448,6 +448,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &640129177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 640129179}
+  - component: {fileID: 640129178}
+  m_Layer: 0
+  m_Name: Advertising
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &640129178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 640129177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b0c752146b2d3469bcd81ef852a839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameId: 2989758
+--- !u!4 &640129179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 640129177}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.040108025, y: 1.21119, z: 0.03606369}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &654504649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,6 +1082,7 @@ MonoBehaviour:
   bSpawn: {fileID: 1455550039}
   bSink: {fileID: 1517342684}
   dZone: {fileID: 1197368054}
+  adv: {fileID: 640129178}
 --- !u!4 &1363794253
 Transform:
   m_ObjectHideFlags: 0
@@ -1065,7 +1107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d4e24fb2a1f16408968c92e7ba5aa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block: {fileID: 114723139862702032, guid: d15e4ef269a90e946b8f543353c5a982, type: 2}
+  block: {fileID: 0}
+  map: {fileID: 0}
 --- !u!1 &1412895226
 GameObject:
   m_ObjectHideFlags: 0
