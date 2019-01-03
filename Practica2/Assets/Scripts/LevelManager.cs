@@ -12,12 +12,14 @@ public class LevelManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        GetComponent<ReadMap>().loadMap(1);
         //Prueba de elementos
         bSink.hide();
         dZone.init(bSink);
         _numBalls = 20;
         bSpawn.setLaunchPos(0, -6);
         bSpawn.spawnBalls(_numBalls);
+
 	}
 	
 	// Update is called once per frame

@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class Block : MonoBehaviour {
 
-    private int _life;
+    private int _life=0;
     private int _type;
+    private bool fall;
+    private int posX, posY;
     [Tooltip("Vida")]
     public Text txt;
 
 	// Use this for initialization
 	void Start () {
-        _life = 5;
         txt.text = _life.ToString();
 	}
 
@@ -25,11 +26,16 @@ public class Block : MonoBehaviour {
         else
             txt.text = _life.ToString();
     }
-    public void setType(int type) {
+    public void SetType(int type) {
         _type = type;
     }
-    public void setLife(int life)
+    public void SetLife(int life)
     {
         _life = life;
+        txt.text = _life.ToString();
+    }
+    public void SetPos(int x, int y) {
+        posX = x;
+        posY = y;
     }
 }
