@@ -14,17 +14,11 @@ public class LevelManager : MonoBehaviour {
 
     private uint _numBalls;
 
-
-	// Use this for initialization
-	void Start () {
-        int i = (int)CanvasJuego.rect.width /11;
-        int margenX = (int)CanvasJuego.rect.width % 11;
-        List<Block> blocks =  GetComponent<ReadMap>().loadMap(Level);
-        foreach (Block b in blocks)
-        {
-            b.gameObject.transform.position = new Vector3(b.GetPosX(), GetComponent<ReadMap>().y - b.GetPosY(), 0);
-        }
-
+    List<Block> blocks;
+    // Use this for initialization
+    void Start () {
+        blocks =  GetComponent<ReadMap>().loadMap(Level);
+                
         //Prueba de elementos
         bSink.hide();
         dZone.init(bSink);
@@ -32,10 +26,33 @@ public class LevelManager : MonoBehaviour {
         bSpawn.setLaunchPos(0, -6);
         bSpawn.spawnBalls(_numBalls);
 
+        int i = Screen.width;
+        int j = Screen.height;
+        
+        float tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 14);
+        float MarginX = (Screen.width - tamX*11)/2;
+        float MarginY = (Screen.height - tamX*14)/2;
+        Vector3 m = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - MarginX,Screen.height - MarginY, 0));
+        //Tamaño al que escalar
+        Vector3 auxTam = Camera.main.ScreenToWorldPoint(new Vector3(tamX, tamX, Camera.main.nearClipPlane)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)); ;
+
+        //Esquina inferior izquierda
+        Vector3 CameraCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.nearClipPlane));
+        //Posicion  de la esquina inferior para un tile
+        //Vector3 posIni = new Vector3(CameraCenter.x - auxTam.x/2, -CameraCenter.y + (3*auxTam.y)/2 ,10);
+
+        //Posicion 0,0 del tablero
+        Vector3 posIni = new Vector3(m.x - auxTam.x/2, -m.y + (3*auxTam.y)/2 ,10);
+
+        foreach (Block b in blocks)
+        {
+            b.gameObject.transform.localScale = auxTam;
+            b.gameObject.transform.position = new Vector3(-posIni.x + auxTam.x * b.GetPosX(), posIni.y + auxTam.y * b.GetPosY(), 10);
+        }
+
 	}
 	
 	// Update is called once per frame
-	/*void Update () {
-		
-	}*/
+	void Update () {
+    }
 }

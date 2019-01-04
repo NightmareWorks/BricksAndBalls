@@ -38,6 +38,10 @@ public class Block : MonoBehaviour {
         posX = x;
         posY = y;
     }
+    public void invertPosY(int y)
+    {
+        posY = y-posY;
+    }
     public int GetPosX()
     {
         return posX;

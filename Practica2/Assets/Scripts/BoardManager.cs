@@ -7,8 +7,7 @@ public class BoardManager : MonoBehaviour {
     //Matriz de bloques
     private List<Block> _board;
     private int tamY, tamX;
-
-    public TextAsset map;
+    
 
     // Use this for initialization
     void Start () {

@@ -80,6 +80,7 @@ public class ReadMap : MonoBehaviour
                                         int type;
                                         int.TryParse(_aux, out type);
                                         _blocks[i].SetLife(type);
+                                        _blocks[i].invertPosY(y);
                                         i++;
                                     }//Fin if
                                 }//Fin foreach
