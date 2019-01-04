@@ -15,14 +15,24 @@ public class DeathZone : MonoBehaviour {
     /*void Update () {
 		
 	}*/
+
+    //Initializes it with the ballSink it needs to work
     public void init(BallSink bs) {
         _bSink = bs;
     }
 
+    //Changes the sink numballs (Called when a ball arrives)
     public void llegaBola() {
         _bSink.setNumBalls(_bSink.getNumBalls() + 1);
     }
 
+    /// <summary>
+    /// Called when a ball collides with the trigger.
+    /// If it's the first ball, activates the sink GUI
+    /// For each ball, moves it to the sink, updates the number of balls
+    /// and destroys it
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Ball thisBall = collision.gameObject.GetComponent<Ball>();

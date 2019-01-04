@@ -580,10 +580,9 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 2
-  cloudProjectId: 
-  framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  cloudProjectId: 120faa12-b478-4e81-b60a-5b624f91157a
+  projectName: Practica2
+  organizationId: davgon12
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

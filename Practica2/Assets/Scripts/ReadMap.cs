@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+<<<<<<< HEAD
 using UnityEngine.UI;
 
 
@@ -101,3 +102,4 @@ public class ReadMap : MonoBehaviour
     }
 
 }
+*/

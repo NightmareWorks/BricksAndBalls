@@ -6,6 +6,7 @@ public class LevelManager : MonoBehaviour {
     public BallSpawner bSpawn;
     public BallSink bSink;
     public DeathZone dZone;
+    public Advertising adv;
 
     public RectTransform CanvasJuego;
 
@@ -25,6 +26,7 @@ public class LevelManager : MonoBehaviour {
         _numBalls = 20;
         bSpawn.setLaunchPos(0, -6);
         bSpawn.spawnBalls(_numBalls);
+
 
         int i = Screen.width;
         int j = Screen.height;
@@ -49,6 +51,8 @@ public class LevelManager : MonoBehaviour {
             b.gameObject.transform.localScale = auxTam;
             b.gameObject.transform.position = new Vector3(-posIni.x + auxTam.x * b.GetPosX(), posIni.y + auxTam.y * b.GetPosY(), 10);
         }
+
+        adv.ShowRewardedAd();
 
 	}
 	
