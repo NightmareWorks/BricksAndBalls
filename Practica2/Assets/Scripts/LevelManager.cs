@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
-    public BallSpawner bSpawn;
+    private BallSpawner bSpawn;
     public BallSink bSink;
     public DeathZone dZone;
     public Advertising adv;
@@ -19,8 +19,10 @@ public class LevelManager : MonoBehaviour {
     List<Block> blocks;
     // Use this for initialization
     void Start () {
+        bSpawn = this.gameObject.GetComponent<BallSpawner>();
         //Carga el txt del nivel seleccionado
         blocks =  GetComponent<ReadMap>().loadMap(Level);
+        GetComponent<BoardManager>().SetLevel(blocks);
         // 1.Empieza el nivel y coloca el bSink y el bSpawn, se añade una estrella al score
         bSink.hide();
         dZone.init(this,bSink);
@@ -33,7 +35,7 @@ public class LevelManager : MonoBehaviour {
         ///Hay que añadir una estrella a la puntuación 
 
         // 2.Se activa el detector de pulsación
-        tDetect.init(this, bSpawn);
+        tDetect.init(this,bSpawn);
 
 
 
@@ -73,7 +75,7 @@ public class LevelManager : MonoBehaviour {
 
     public void onLastBallArrived() {
         //Calls BoardManager stepForward()
-
+        
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);
         bSpawn.gameObject.SetActive(true);

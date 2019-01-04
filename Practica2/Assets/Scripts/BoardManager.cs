@@ -24,7 +24,7 @@ public class BoardManager : MonoBehaviour {
         }
         return true;
     }
-    void setLevel(List<Block> blocks, int y)
+    public void SetLevel(List<Block> blocks)
     {
         _board = blocks;
    
