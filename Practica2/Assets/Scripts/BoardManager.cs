@@ -6,14 +6,13 @@ using System.IO;
 public class BoardManager : MonoBehaviour {
     //Matriz de bloques
     private List<Block> _board;
-    [Tooltip("Prefab block")]
-    public Block block;
+    private int tamY, tamX;
 
     public TextAsset map;
 
     // Use this for initialization
     void Start () {
-   
+       
     }
 
     // Update is called once per frame
@@ -26,7 +25,9 @@ public class BoardManager : MonoBehaviour {
         }
         return true;
     }
-    void setLevel(){
-
+    void setLevel(List<Block> blocks, int y)
+    {
+        _board = blocks;
+   
     }
 }

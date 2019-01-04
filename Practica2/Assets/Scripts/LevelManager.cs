@@ -6,6 +6,9 @@ public class LevelManager : MonoBehaviour {
     public BallSpawner bSpawn;
     public BallSink bSink;
     public DeathZone dZone;
+
+    public RectTransform CanvasJuego;
+
     [Range(1,312)]
     public int Level = 1;
 
@@ -14,7 +17,14 @@ public class LevelManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<ReadMap>().loadMap(Level);
+        int i = (int)CanvasJuego.rect.width /11;
+        int margenX = (int)CanvasJuego.rect.width % 11;
+        List<Block> blocks =  GetComponent<ReadMap>().loadMap(Level);
+        foreach (Block b in blocks)
+        {
+            b.gameObject.transform.position = new Vector3(b.GetPosX(), GetComponent<ReadMap>().y - b.GetPosY(), 0);
+        }
+
         //Prueba de elementos
         bSink.hide();
         dZone.init(bSink);

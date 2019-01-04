@@ -8,8 +8,10 @@ using UnityEngine.UI;
 
 public class ReadMap : MonoBehaviour
 {
+    [Tooltip("Prefab block")]
     public Block blockGObj;
 
+    public int y;
     public List<Block> loadMap(int level) {
         List<Block> _blocks = new List<Block>();
         string ruta = "Assets/Maps/mapdata"+ level + ".txt";
@@ -21,7 +23,7 @@ public class ReadMap : MonoBehaviour
             using (StreamReader sr = new StreamReader(ruta))
             {
                 string line;
-                int y = 0;
+                y = 0;
                 // Read and display lines from the file until the end of 
                 // the file is reached.
                 while ((line = sr.ReadLine()) != null) {
@@ -86,9 +88,6 @@ public class ReadMap : MonoBehaviour
                     }
                 }
                 sr.Close();
-                foreach(Block b in _blocks) {
-                    b.gameObject.transform.position = new Vector3(b.GetPosX(), y-b.GetPosY(), 0);
-                }
             }
         }
         catch (Exception e)
