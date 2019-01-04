@@ -1323,6 +1323,7 @@ MonoBehaviour:
   bSpawn: {fileID: 1363794255}
   bSink: {fileID: 1517342684}
   dZone: {fileID: 1197368054}
+
   CanvasJuego: {fileID: 821217604}
   Level: 1
   adv: {fileID: 640129178}
@@ -1352,7 +1353,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7d4e24fb2a1f16408968c92e7ba5aa4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
 --- !u!114 &1363794255
 MonoBehaviour:
   m_ObjectHideFlags: 0
