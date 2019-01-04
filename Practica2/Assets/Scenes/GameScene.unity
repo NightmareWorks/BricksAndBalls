@@ -1078,6 +1078,7 @@ MonoBehaviour:
   bSpawn: {fileID: 1363794255}
   bSink: {fileID: 1517342684}
   dZone: {fileID: 1197368054}
+  Level: 1
 --- !u!4 &1363794253
 Transform:
   m_ObjectHideFlags: 0
@@ -1498,6 +1499,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block
       objectReference: {fileID: 0}
+    - target: {fileID: 3632986200843447968, guid: d15e4ef269a90e946b8f543353c5a982,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3563025144718328256, guid: d15e4ef269a90e946b8f543353c5a982,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1556,12 +1562,12 @@ PrefabInstance:
     - target: {fileID: 3563025144718328256, guid: d15e4ef269a90e946b8f543353c5a982,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.03
+      value: -17.38
       objectReference: {fileID: 0}
     - target: {fileID: 3563025144718328256, guid: d15e4ef269a90e946b8f543353c5a982,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.7
+      value: 12.42
       objectReference: {fileID: 0}
     - target: {fileID: 3563025144718328256, guid: d15e4ef269a90e946b8f543353c5a982,
         type: 3}

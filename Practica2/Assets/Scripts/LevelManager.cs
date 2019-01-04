@@ -6,13 +6,15 @@ public class LevelManager : MonoBehaviour {
     public BallSpawner bSpawn;
     public BallSink bSink;
     public DeathZone dZone;
+    [Range(1,312)]
+    public int Level = 1;
 
     private uint _numBalls;
 
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<ReadMap>().loadMap(1);
+        GetComponent<ReadMap>().loadMap(Level);
         //Prueba de elementos
         bSink.hide();
         dZone.init(bSink);

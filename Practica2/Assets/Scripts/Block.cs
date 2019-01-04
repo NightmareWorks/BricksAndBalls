@@ -38,4 +38,12 @@ public class Block : MonoBehaviour {
         posX = x;
         posY = y;
     }
+    public int GetPosX()
+    {
+        return posX;
+    }
+    public int GetPosY()
+    {
+        return posY;
+    }
 }

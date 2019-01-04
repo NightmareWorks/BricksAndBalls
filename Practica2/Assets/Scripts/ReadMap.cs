@@ -13,73 +13,81 @@ public class ReadMap : MonoBehaviour
     public List<Block> loadMap(int level) {
         List<Block> _blocks = new List<Block>();
         string ruta = "Assets/Maps/mapdata"+ level + ".txt";
-
-
+        
         try
         {
             // Create an instance of StreamReader to read from a file.
             // The using statement also closes the StreamReader.
             using (StreamReader sr = new StreamReader(ruta))
             {
-                char c;
-                int aux;
                 string line;
+                int y = 0;
                 // Read and display lines from the file until the end of 
                 // the file is reached.
                 while ((line = sr.ReadLine()) != null) {
                     if (line == "[layer]") {
-                        string layer = sr.ReadLine();
-                        if (layer == "type=Tile Layer 1")
+                        line = sr.ReadLine(); //Type
+                        if (line == "type=Tile Layer 1")
                         {
+                            sr.ReadLine(); // Data
+                            bool ended = false;
+                            while(!ended)
+                            {
+                                line = sr.ReadLine();
+                                //Compruebo si es la última linea
+                                if (line.EndsWith(".")) {
+                                    line = line.Substring(0, line.Length - 1);
+                                    ended = true;
+                                }
+                                string[] casillas = line.Split(',');
+
+                                int x = 0;
+
+                                foreach (string _aux in casillas) {
+                                    if (_aux != "0" && _aux != "") {
+                                        Block _block = Instantiate(blockGObj);
+                                        int type;
+                                        int.TryParse(_aux, out type);
+                                        _block.SetType(type);
+                                        _block.SetPos(x, y);
+                                        _blocks.Add(_block);
+                                    }
+                                    x++;
+                                }
+                                y++;
+                            }
+                        }
+                        else if (line == "type=Tile Layer 2") {
                             sr.ReadLine();
                             int i = 0;
-                            do
+                            bool ended = false;
+                            while (!ended)
                             {
-                                aux = sr.Read();
-                                if (aux == 13 ) { //Salto de línea
-                                   sr.ReadLine();
-                                    aux= sr.Read()- 48;
-                                }
-                                else aux -= 48;
-
-                                if (aux != 0)
+                                line = sr.ReadLine();
+                                //Compruebo si es la última linea
+                                if (line.EndsWith("."))
                                 {
-                                    int x = i % 11;
-                                    int y = i / 11;
-                                    Block _block = Instantiate(blockGObj);
-                                    _block.gameObject.transform.position = new Vector3(x, y, 0);
-                                    _block.gameObject.GetComponent<Block>().SetLife(20);
-                                    // Block _block = block.GetComponent<Block>();
-                                    _block.SetType(aux);
-                                    _block.SetPos(i % 11, i / 11);
-                                    _blocks.Add(_block); 
+                                    line = line.Substring(0, line.Length - 1);
+                                    ended = true;
                                 }
-                                i++;
-                            } while ((c = (char)sr.Read()) != '.');
-                        }
-                        else if (layer == "type=Tile Layer 2") {
-                            sr.ReadLine();
-                            int i = 0;
-                            do
-                            {
-                                // aux = sr.Read();
-                                // if (aux == 13)
-                                // { //Salto de línea
-                                //     sr.ReadLine();
-                                //     aux = sr.Read() - 48;
-                                // }
-                                // else aux -= 48;
-                                _blocks[1].SetLife(900);
-                                aux = sr.Read() - 48;
-                                if (aux != 0)
+                                string[] casillas = line.Split(',');
+                                foreach (string _aux in casillas)
                                 {
-                                   // _blocks[i].SetLife(aux);
-                                    i++;
-                                }//Fin if
-
-                            } while ((c = (char)sr.Read()) != '.');
-                        }
+                                    if (_aux != "0" && _aux != "")
+                                    {
+                                        int type;
+                                        int.TryParse(_aux, out type);
+                                        _blocks[i].SetLife(type);
+                                        i++;
+                                    }//Fin if
+                                }//Fin foreach
+                            }// Fin del while
+                        }//Fin if layer 2
                     }
+                }
+                sr.Close();
+                foreach(Block b in _blocks) {
+                    b.gameObject.transform.position = new Vector3(b.GetPosX(), y-b.GetPosY(), 0);
                 }
             }
         }
@@ -89,7 +97,7 @@ public class ReadMap : MonoBehaviour
             Console.WriteLine("The file could not be read:");
             Console.WriteLine(e.Message);
         }
-        return null;
+        return _blocks;
     }
 
 }
