@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
-using UnityEditor.Advertisements;
 //using UnityEngine.Monetization;
 
 
 public class Advertising : MonoBehaviour {
 
     [SerializeField]
-    private string
-            GameId;
+    private string GameId;
     /*
     [SerializeField]
     private bool testMode;*/

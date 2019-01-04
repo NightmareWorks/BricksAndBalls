@@ -27,22 +27,27 @@ public class BallSpawner : MonoBehaviour {
     }*/
 
     //Falta la dirección que van a tomar las bolas
-    public void spawnBalls(uint numBalls) {
-        StartCoroutine(spawnBallsCoroutine(numBalls));
+    public void spawnBalls(uint numBalls, Vector2 direction) {
+        StartCoroutine(spawnBallsCoroutine(numBalls, direction));
     }
 
     public void setLaunchPos(float x, float y) {
         posX = x; posY = y;
     }
 
+    public Vector2 getLaunchPos()
+    {
+        return new Vector2(posX, posY);
+    }
 
-    IEnumerator spawnBallsCoroutine(uint numBalls)
+    IEnumerator spawnBallsCoroutine(uint numBalls, Vector2 direction)
     {
         for (int i = 0; i < numBalls; i++)
         {
             Ball actB = Instantiate(ball);
             actB.init();
-            actB.startMove(new Vector2(posX,posY),speed);
+            actB.startMove(new Vector2(posX,posY),speed * direction);
+            yield return new WaitForFixedUpdate();
             yield return new WaitForFixedUpdate();
             yield return new WaitForFixedUpdate();
         }
@@ -50,5 +55,5 @@ public class BallSpawner : MonoBehaviour {
     }
 
     private float posX, posY;
-    private Vector2 speed = new Vector2(5, 50);
+    private float speed = 50;
 }

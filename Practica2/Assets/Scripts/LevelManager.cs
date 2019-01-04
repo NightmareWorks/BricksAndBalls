@@ -7,23 +7,59 @@ public class LevelManager : MonoBehaviour {
     public BallSink bSink;
     public DeathZone dZone;
     public Advertising adv;
+    public TouchDetect tDetect;
 
     private uint _numBalls;
 
 
 	// Use this for initialization
 	void Start () {
-        //Prueba de elementos
+        //Carga el txt del nivel seleccionado
+
+
+        // 1.Empieza el nivel y coloca el bSink y el bSpawn, se añade una estrella al score
         bSink.hide();
-        dZone.init(bSink);
+        dZone.init(this,bSink);
         _numBalls = 20;
-        bSpawn.setLaunchPos(0, -6);
-        bSpawn.spawnBalls(_numBalls);
-        adv.ShowRewardedAd();
+        Vector2 startLaunchPosition = new Vector2(0, -6.6f);
+        bSpawn.setLaunchPos(startLaunchPosition.x, startLaunchPosition.y);
+        bSink.setPos(startLaunchPosition.x, startLaunchPosition.y);
+        bSink.setNumBalls(_numBalls);
+        bSink.show();
+        ///Hay que añadir una estrella a la puntuación 
+
+        // 2.Se activa el detector de pulsación
+        tDetect.init(this, bSpawn);
+
+
+
+        //bSpawn.spawnBalls(_numBalls);
+        //adv.ShowRewardedAd();
 	}
-	
-	// Update is called once per frame
-	/*void Update () {
+
+    // Update is called once per frame
+    /*void Update () {
 		
 	}*/
+
+    void activateTouch() {
+        tDetect.enabled = true;
+    }
+
+    void deactivateTouch() {
+        tDetect.enabled = false;
+    }
+
+    public void onLastBallArrived() {
+        //Calls BoardManager stepForward()
+
+        Vector2 pos = bSink.getPos();
+        bSpawn.setLaunchPos(pos.x, pos.y);
+        bSpawn.gameObject.SetActive(true);
+        tDetect.gameObject.SetActive(true);
+    }
+
+    public uint GetNumBalls() { return _numBalls; }
+
+    public void hideBallSink() { bSink.hide(); }
 }

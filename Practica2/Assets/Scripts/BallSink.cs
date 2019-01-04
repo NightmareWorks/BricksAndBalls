@@ -9,8 +9,8 @@ public class BallSink : MonoBehaviour {
     public Ball fakeBall;//Non playable ball that is drawn in the sink
     public Text numballsText;//Text placed next to the fakeBall
 
-    //Balls arrived
-    private uint _numBalls;
+    
+    private uint _numBalls;//Balls arrived
     private Vector2 pos;//Position of the sink 2D
 
     /// <summary>

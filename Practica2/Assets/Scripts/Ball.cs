@@ -43,5 +43,9 @@ public class Ball : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    public bool isReturning() {
+        return rb.velocity.y < 0;
+    }
+
     private Rigidbody2D rb;
 }
