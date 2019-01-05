@@ -9,35 +9,26 @@ public class BordersSetter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        float tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 14);
+        float MarginX = (Screen.width - tamX * 11) / 2;
+        float MarginY = (Screen.height - tamX * 14) / 2;
+        Vector3 m = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - MarginX, Screen.height - MarginY, 0));
 
-        //Cada borde en su sitio respecto al tamaño de la pantalla
-        Vector3 aux;
-        Vector2 pixtam;
-
-        pixtam = top.gameObject.GetComponent<SpriteRenderer>().sprite.rect.size;
-        float scaleFactorX = Screen.width / pixtam.x;
-        float scaleFactorY = Screen.height / pixtam.y;
-        aux = cam.ScreenToWorldPoint(new Vector3(Screen.width / 2, -pixtam.x*2 / 3, 0));
+        Vector3 auxTam = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-MarginX*2, 1, Camera.main.nearClipPlane)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
+             
+        top.gameObject.transform.localScale = auxTam;
+        bot.gameObject.transform.localScale = auxTam;
+        top.gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height-MarginY, 0));
+        bot.gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, MarginY, 0));
         
-        top.transform.position = new Vector3(aux.x, -aux.y, 0);
-        top.transform.localScale = new Vector3(scaleFactorX, 1, 1);
+        auxTam = Camera.main.ScreenToWorldPoint(new Vector3(1, Screen.height-MarginY*2, Camera.main.nearClipPlane)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)); ;
+        left.gameObject.transform.localScale = auxTam;
+        right.gameObject.transform.localScale = auxTam;
+        left.gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-MarginX,Screen.height / 2, 0));
 
-        aux = cam.ScreenToWorldPoint(new Vector3(-pixtam.x*2 / 3, Screen.height/2, 0));
-        left.transform.position = new Vector3(aux.x, -aux.y, 0);
-        left.transform.localScale = new Vector3(1, scaleFactorY, 1);
+        right.gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(MarginX, Screen.height / 2, 0));
 
-        /*
-        aux = cam.ScreenToWorldPoint(new Vector3(Screen.width + pixtam.x*2 / 3, Screen.height / 2, 0));
-        right.transform.position = new Vector3(aux.x, -aux.y, 0);
-        right.transform.localScale = new Vector3(1, scaleFactorY, 1);
-        */
 
-        aux = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth + pixtam.x * 2 / 3, cam.scaledPixelHeight / 2, 0));
-        right.transform.position = new Vector3(aux.x, -aux.y, 0);
-        right.transform.localScale = new Vector3(1, scaleFactorY, 1);
-
-        aux = cam.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height+pixtam.x * 2 / 3, 0));
-        bot.transform.position = new Vector3(aux.x, -aux.y, 0);
-        bot.transform.localScale = new Vector3(scaleFactorX, 1, 1);
+        
     }
 }

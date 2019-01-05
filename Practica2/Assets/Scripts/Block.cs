@@ -12,6 +12,8 @@ public class Block : MonoBehaviour {
     [Tooltip("Vida")]
     public Text txt;
 
+    public BoardManager boardManager;
+
 	// Use this for initialization
 	void Start () {
         txt.text = _life.ToString();
@@ -21,7 +23,7 @@ public class Block : MonoBehaviour {
     {
         --_life;
         if (_life <= 0) {
-            Destroy(gameObject);
+            boardManager.DeleteTile(this);
         }
         else
             txt.text = _life.ToString();
