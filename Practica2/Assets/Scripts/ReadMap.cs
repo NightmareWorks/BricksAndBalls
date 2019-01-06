@@ -61,8 +61,10 @@ public class ReadMap : MonoBehaviour
                         }
                         else if (line == "type=Tile Layer 2") {
                             sr.ReadLine();
-                            int i = 0;
                             bool ended = false;
+                            int i = 0;//Casilla que necesita la vida
+                            int b = 0;//Índice que marca las casillas leídas
+                            int id = _blocks[0].GetPosX()+ _blocks[0].GetPosY() * 11;//Id de la casilla que queremos
                             while (!ended)
                             {
                                 line = sr.ReadLine();
@@ -75,13 +77,17 @@ public class ReadMap : MonoBehaviour
                                 string[] casillas = line.Split(',');
                                 foreach (string _aux in casillas)
                                 {
-                                    if (_aux != "0" && _aux != "")
+                                    if (_aux != "")
                                     {
-                                        int type;
-                                        int.TryParse(_aux, out type);
-                                        _blocks[i].SetLife(type);
-                                        _blocks[i].invertPosY(y);
-                                        i++;
+                                        if (b == id) { 
+                                            int type;
+                                            int.TryParse(_aux, out type);
+                                            _blocks[i].SetLife(type);
+                                            _blocks[i].invertPosY(y);
+                                            i++;
+                                            id = _blocks[i].GetPosX() + _blocks[i].GetPosY() * 11;
+                                        }
+                                        b++;
                                     }//Fin if
                                 }//Fin foreach
                             }// Fin del while

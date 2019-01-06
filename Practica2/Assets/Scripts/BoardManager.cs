@@ -27,13 +27,16 @@ public class BoardManager : MonoBehaviour {
     }
     public bool StepForwardBlocks() {
         foreach (Block b in _board) {
-            b.SetPos(b.GetPosX(), b.GetPosY() - 1);
-            if (b.GetPosY() < 0)
-                Debug.Log("HAS PERDIDO");
-            else if(b.GetPosY()==0)
-                Debug.Log("DANGER ZONE");
-            //Si la resta es menor se acaba el juego.
-            b.gameObject.transform.position = new Vector3(-posIni.x + tamScale.x * b.GetPosX(), posIni.y + tamScale.y * b.GetPosY(), 10);            
+            if (b.GetFall())
+            {
+                b.SetPos(b.GetPosX(), b.GetPosY() - 1);
+                if (b.GetPosY() < 0)
+                    Debug.Log("HAS PERDIDO");
+                else if (b.GetPosY() == 0)
+                    Debug.Log("DANGER ZONE");
+                //Si la resta es menor se acaba el juego.
+                b.gameObject.transform.position = new Vector3(-posIni.x + tamScale.x * b.GetPosX(), posIni.y + tamScale.y * b.GetPosY(), 10);
+            }
         }
         return true;
     }

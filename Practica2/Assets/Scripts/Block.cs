@@ -16,9 +16,9 @@ public class Block : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        txt.text = _life.ToString();
-	}
-
+    
+    }
+    public bool GetFall() { return fall; }
     private void OnCollisionExit2D(Collision2D collision)
     {
         --_life;
@@ -30,11 +30,26 @@ public class Block : MonoBehaviour {
     }
     public void SetType(int type) {
         _type = type;
+        Sprite myBlock = Resources.Load("Images/game_img_block" + type + "_1", typeof(Sprite)) as Sprite;
+        gameObject.GetComponent<SpriteRenderer>().sprite = myBlock;
+        switch (_type)
+        {
+            case 10:
+            case 20:
+                fall = false;
+                break;
+            default:
+                break;
+        }
     }
     public void SetLife(int life)
     {
         _life = life;
-        txt.text = _life.ToString();
+        if (_type == 2 || _type == 10)
+            _life *= 2;
+
+        if(life!=0)
+            txt.text = _life.ToString();
     }
     public void SetPos(int x, int y) {
         posX = x;

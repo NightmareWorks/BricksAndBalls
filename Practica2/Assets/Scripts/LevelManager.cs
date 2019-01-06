@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+enum LevelState { PLAY, PAUSE, DANGER, DEAD};
 public class LevelManager : MonoBehaviour {
     private BallSpawner bSpawn;
     public BallSink bSink;
@@ -26,9 +26,9 @@ public class LevelManager : MonoBehaviour {
         bSink.hide();
         dZone.init(this,bSink);
         _numBalls = 50;
-        Vector2 startLaunchPosition = new Vector2(0, -6.6f);
-        bSpawn.setLaunchPos(startLaunchPosition.x, startLaunchPosition.y);
-        bSink.setPos(startLaunchPosition.x, startLaunchPosition.y);
+
+        bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
+        bSink.setPos(0, dZone.gameObject.transform.position.y);
         bSink.setNumBalls(_numBalls);
         bSink.show();
         ///Hay que añadir una estrella a la puntuación 
@@ -46,8 +46,6 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void onLastBallArrived() {
-        //Calls BoardManager stepForward()
-        Debug.Log("He llegado");
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);
         bSpawn.gameObject.SetActive(true);
