@@ -28,6 +28,7 @@ public class LevelManager : MonoBehaviour {
         _numBalls = 50;
 
         Vector3 tam = GetComponent<BoardManager>().GetTam();
+
         bSpawn.setScale(tam);
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.setPos(0, dZone.gameObject.transform.position.y);

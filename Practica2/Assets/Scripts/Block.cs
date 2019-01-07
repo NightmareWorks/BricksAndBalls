@@ -50,8 +50,11 @@ public class Block : MonoBehaviour {
         if (_type == 2 || _type == 10)
             _life *= 2;
 
-        if(life!=0)
+        if (life != 0)
+        {
             txt.text = _life.ToString();
+        }
+
     }
     public void SetPos(int x, int y) {
         posX = x;

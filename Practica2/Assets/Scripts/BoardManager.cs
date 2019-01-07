@@ -48,6 +48,9 @@ public class BoardManager : MonoBehaviour {
         tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 18);
         MarginX = (Screen.width - tamX * 11) / 2;
         MarginY = (Screen.height - tamX * 14) / 2;
+
+        Debug.Log("MarginX " + MarginX + "MarginY " + MarginY);
+
         Vector3 m = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - MarginX, Screen.height - MarginY, 0));
         //Tamaño al que escalar
         tamScale = Camera.main.ScreenToWorldPoint(new Vector3(tamX, tamX, Camera.main.nearClipPlane)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)); ;
