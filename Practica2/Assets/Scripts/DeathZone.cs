@@ -17,7 +17,7 @@ public class DeathZone : MonoBehaviour {
 	}*/
 
     //Initializes it with the ballSink it needs to work
-    public void init(LevelManager lvM,BallSink bs) {
+    public void init(LevelManager lvM, BallSink bs) {
         _lvMgr = lvM;
         _bSink = bs;
     }
@@ -50,7 +50,7 @@ public class DeathZone : MonoBehaviour {
         {
             if (firstOne)
             {
-                _bSink.setPos(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
+                _bSink.setPosX(collision.gameObject.transform.position.x);
                 _bSink.setNumBalls(1);
                 _bSink.show();
                 Destroy(thisBall.gameObject);

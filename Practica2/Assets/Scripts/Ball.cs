@@ -13,8 +13,9 @@ public class Ball : MonoBehaviour {
     /*void Update () {
 		
 	}*/
-    public void init() {
+    public void init(Vector3 tam) {
         rb = GetComponent<Rigidbody2D>();
+        gameObject.transform.localScale = tam;
     }
 
     public void startMove(Vector2 posIni, Vector2 speed) {
@@ -32,7 +33,7 @@ public class Ball : MonoBehaviour {
         StartCoroutine(moveToCoroutine(position, numPasos, callback));
     }
 
-    //A este metodo se le puede pasar un Callback para que lo lance cuando haya terminado
+    //A este método se le puede pasar un Callback para que lo lance cuando haya terminado
     private IEnumerator moveToCoroutine(Vector2 position, uint numPasos, System.Action callback) {
         Vector2 moveTo = new Vector2((position.x - transform.position.x) / numPasos, (position.y - transform.position.y)/numPasos);
         for (int i = 0; i < numPasos; i++) {

@@ -27,10 +27,13 @@ public class LevelManager : MonoBehaviour {
         dZone.init(this,bSink);
         _numBalls = 50;
 
+        Vector3 tam = GetComponent<BoardManager>().GetTam();
+        bSpawn.setScale(tam);
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.setPos(0, dZone.gameObject.transform.position.y);
         bSink.setNumBalls(_numBalls);
         bSink.show();
+        bSink.init(tam);
         ///Hay que añadir una estrella a la puntuación 
 
         // 2.Se activa el detector de pulsación

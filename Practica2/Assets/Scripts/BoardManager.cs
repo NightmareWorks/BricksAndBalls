@@ -6,8 +6,8 @@ using System.IO;
 public class BoardManager : MonoBehaviour {
     //Matriz de bloques
     private List<Block> _board;
-    private int tamY, tamX;
-    private int MarginX, MarginY;
+    private float tamX;
+    private float MarginX, MarginY;
 
     private Vector3 tamScale, posIni;
     // Use this for initialization
@@ -44,10 +44,10 @@ public class BoardManager : MonoBehaviour {
     public void SetLevel(int Level)
     {
         _board = GetComponent<ReadMap>().loadMap(Level);
-        
-        float tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 14);
-        float MarginX = (Screen.width - tamX * 11) / 2;
-        float MarginY = (Screen.height - tamX * 14) / 2;
+
+        tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 18);
+        MarginX = (Screen.width - tamX * 11) / 2;
+        MarginY = (Screen.height - tamX * 14) / 2;
         Vector3 m = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - MarginX, Screen.height - MarginY, 0));
         //Tamaño al que escalar
         tamScale = Camera.main.ScreenToWorldPoint(new Vector3(tamX, tamX, Camera.main.nearClipPlane)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)); ;
@@ -66,5 +66,8 @@ public class BoardManager : MonoBehaviour {
             b.gameObject.transform.position = new Vector3(-posIni.x + tamScale.x * b.GetPosX(), posIni.y + tamScale.y * b.GetPosY(), 10);
         }
    
+    }
+    public Vector3 GetTam() {
+        return tamScale;
     }
 }

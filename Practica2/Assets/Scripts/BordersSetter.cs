@@ -5,11 +5,10 @@ using UnityEngine;
 public class BordersSetter : MonoBehaviour {
 
     public BoxCollider2D top, right, left, bot;
-    public Camera cam;
 
 	// Use this for initialization
-	void Start () {
-        float tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 14);
+	void Awake () {
+        float tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 18);
         float MarginX = (Screen.width - tamX * 11) / 2;
         float MarginY = (Screen.height - tamX * 14) / 2;
         Vector3 m = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - MarginX, Screen.height - MarginY, 0));
@@ -24,11 +23,8 @@ public class BordersSetter : MonoBehaviour {
         auxTam = Camera.main.ScreenToWorldPoint(new Vector3(1, Screen.height-MarginY*2, Camera.main.nearClipPlane)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)); ;
         left.gameObject.transform.localScale = auxTam;
         right.gameObject.transform.localScale = auxTam;
-        left.gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-MarginX,Screen.height / 2, 0));
-
+        left.gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - MarginX, Screen.height / 2, 0));
         right.gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(MarginX, Screen.height / 2, 0));
 
-
-        
     }
 }
