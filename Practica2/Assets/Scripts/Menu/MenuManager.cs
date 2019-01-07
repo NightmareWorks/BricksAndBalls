@@ -1,16 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    //Component that fills the canvas with the level buttons
     [SerializeField]
     private LevelFiller _lvFiller;
     [SerializeField]
     private uint _numLevels;
+
+    //Window to exit
     [SerializeField]
     private GameObject _exitPopUp;
 
+    //Window to shop
+    [SerializeField]
+    private GameObject _shopPopUp;
+
+    //Number of rubys and stars
+    //These ints must be assigned at start()
+    //Both can be updated after watching ads or finishing levels
+    [SerializeField]
+    private Text _rubysTxtShop;
+    [SerializeField]
+    private Text _rubysTxt;
+    private uint _numRubys;
+    [SerializeField]
+    private Text _starsTxt;
+    private uint _totalStars;
+
+    //Attributes used to create the level buttons
     private LevelButton[] _levelButtons;
     private uint _lvCount;
 
@@ -33,12 +54,18 @@ public class MenuManager : MonoBehaviour
 
 
         //Si no lo hay, inicializa el nivel 1 con 0 estrellas, pone 400 rubíes y ningún item
-        for (uint i = _numLevels - 1; i > 0; i--) {
-            _levelButtons[i].init(i+1, false);
-        }
         _levelButtons[1].init(2, true);
         _levelButtons[0].init(1, true);
+        for (uint i = 3; i <= _numLevels; i++) {
+            _levelButtons[i-1].init(i, false);
+        }
+        _numRubys = 400;
+        _totalStars = 0;
 
+        //Assigns the numbers to respective texts
+        _rubysTxt.text = _numRubys.ToString();
+        _rubysTxtShop.text = _numRubys.ToString();
+        _starsTxt.text = _totalStars.ToString();
     }
 
     //Introduces a button into the array (called in the filler)
@@ -47,6 +74,7 @@ public class MenuManager : MonoBehaviour
         ++_lvCount;
     }
 
+    ////Callbacks for the shop buttons////
     public void showExitPopUp() {
         _exitPopUp.SetActive(true);
     }
@@ -59,4 +87,23 @@ public class MenuManager : MonoBehaviour
         //Guarda las cosas y sale
         Application.Quit();
     }
+    //////////////////////////////////////
+    
+    ////Callbacks for the shop buttons////
+    public void showShopPopUp()
+    {
+        _shopPopUp.SetActive(true);
+    }
+
+    public void hideShopPopUp()
+    {
+        _shopPopUp.SetActive(false);
+    }
+
+    public void buyCositaas()
+    {
+        //Guarda las cosas y sale
+        Application.Quit();
+    }
+    //////////////////////////////////////
 }
