@@ -1437,7 +1437,7 @@ MonoBehaviour:
   adv: {fileID: 640129178}
   tDetect: {fileID: 1182438396}
   CanvasJuego: {fileID: 821217604}
-  Level: 119
+  Level: 82
 --- !u!4 &1363794253
 Transform:
   m_ObjectHideFlags: 0
