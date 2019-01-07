@@ -20,8 +20,8 @@ public class LevelButton : MonoBehaviour
             _star2.SetActive(false);
             _star1.SetActive(false);
             img.sprite = _lockedLevel;
-            lvText.gameObject.SetActive(false);
-            //lvText.text = "";
+            //lvText.gameObject.SetActive(false);
+            lvText.text = "";
         }
         else {
             switch (_numStars) {
@@ -40,6 +40,7 @@ public class LevelButton : MonoBehaviour
                 default:
                     break;
             }
+            img.sprite = _unlockedLevel;
             lvText.gameObject.SetActive(true);
             lvText.text = _level.ToString();
         }
