@@ -12,6 +12,7 @@ public class BallSink : MonoBehaviour {
     
     private uint _numBalls;//Balls arrived
     private Vector2 pos;//Position of the sink 2D
+    private Vector2 size;//Size of the ball
 
     /// <summary>
     /// Called when the balls start to be launch
@@ -33,6 +34,7 @@ public class BallSink : MonoBehaviour {
     public void init(Vector3 tam)
     {
         fakeBall.gameObject.transform.localScale = tam;
+        size = fakeBall.gameObject.GetComponent<SpriteRenderer>().size/2;
     }
 
     //Gets the ball sink position
@@ -40,7 +42,7 @@ public class BallSink : MonoBehaviour {
 
     //Sets it
     public void setPos(float x, float y) {
-        pos = new Vector2(x, y);
+        pos = new Vector2(x, y+size.y);
         fakeBall.gameObject.transform.position = new Vector3(pos.x, pos.y, 0);
     }
 

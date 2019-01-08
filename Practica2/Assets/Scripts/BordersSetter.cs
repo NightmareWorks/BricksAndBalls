@@ -10,7 +10,7 @@ public class BordersSetter : MonoBehaviour {
 
     public BoxCollider2D top, right, left, bot;
     public RectTransform[] bordesPantalla = new RectTransform[3];
-    public RectTransform panel;
+    public RectTransform[] panel = new RectTransform[3];
     public LayoutElement[] bordesLaterales = new LayoutElement[3];
 
     float tamX, MarginY,MarginX;
@@ -49,9 +49,11 @@ public class BordersSetter : MonoBehaviour {
         bordesLaterales[2].minHeight = Screen.height - MarginY * 2;
 
         //Escalado del UI
-        float scale = Mathf.Min(bordesPantalla[1].sizeDelta.x / panel.sizeDelta.x, (MarginY / 2) / panel.sizeDelta.y);
-        panel.localScale = new Vector3(scale, scale, 1);
-
+        float scale = Mathf.Min(bordesPantalla[1].sizeDelta.x / panel[0].sizeDelta.x, (MarginY / 2) / panel[0].sizeDelta.y);
+        panel[0].localScale = new Vector3(scale, scale, 1);
+        scale = Mathf.Min(bordesPantalla[1].sizeDelta.x / panel[1].sizeDelta.x, (MarginY) / panel[1].sizeDelta.y);
+        panel[1].localScale = new Vector3(scale, scale, 1);
+        panel[2].localScale = new Vector3(scale, scale, 1);
 
     }
 }

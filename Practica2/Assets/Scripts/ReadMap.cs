@@ -12,9 +12,12 @@ public class ReadMap : MonoBehaviour
 {
     [Tooltip("Prefab block")]
     public Block blockGObj;
+    private Transform parent;
 
     public int y;
     public List<Block> loadMap(int level) {
+        parent = new GameObject("Blocks").transform;
+
         List<Block> _blocks = new List<Block>();
         TextAsset text = Resources.Load("Maps/mapdata" + level) as TextAsset;
         string[] mapas = text.text.Split('\n');
@@ -54,7 +57,7 @@ public class ReadMap : MonoBehaviour
 
                                 foreach (string _aux in casillas) {
                                     if (_aux != "0" && _aux != "") {
-                                        Block _block = Instantiate(blockGObj);
+                                        Block _block = Instantiate(blockGObj,parent);
                                         int type;
                                         int.TryParse(_aux, out type);
                                         _block.SetType(type);
@@ -104,7 +107,7 @@ public class ReadMap : MonoBehaviour
                     }
                     iLine++;
                 }
-                //sr.Close();
+                blockGObj.enabled=false;
             }
         }
         catch (Exception e)

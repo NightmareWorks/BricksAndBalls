@@ -9,12 +9,19 @@ public class LevelManager : MonoBehaviour {
     public DeathZone dZone;
     public Advertising adv;
     public TouchDetect tDetect;
+    public UIManager UIManager;
+
+
+    private BoardManager boardManager;
 
     private LevelState State;
 
     [Range(1,312)]
     public int Level = 1;
-
+    private int Puntuacion = 0;
+    private int PAcumulado = 10;
+    private int maxPuntuacion;
+    
     private uint _numBalls;
     private void Awake()
     {
@@ -33,9 +40,10 @@ public class LevelManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        boardManager = GetComponent<BoardManager>();
         bSpawn = this.gameObject.GetComponent<BallSpawner>();
         //Carga el txt del nivel seleccionado
-        GetComponent<BoardManager>().SetLevel(Level);
+        boardManager.SetLevel(Level);
 
         // 1.Empieza el nivel y coloca el bSink y el bSpawn, se añade una estrella al score
         bSink.hide();
@@ -44,36 +52,54 @@ public class LevelManager : MonoBehaviour {
         //Game Manager
         _numBalls = 50;
 
-        Vector3 tam = GetComponent<BoardManager>().GetTam();
-
+        Vector3 tam = boardManager.GetTam();
         bSpawn.setScale(tam);
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
+        bSink.init(tam);
         bSink.setPos(0, dZone.gameObject.transform.position.y);
         bSink.setNumBalls(_numBalls);
         bSink.show();
-        bSink.init(tam);
         ///Hay que añadir una estrella a la puntuación 
 
         // 2.Se activa el detector de pulsación
         tDetect.init(this,bSpawn);
-	}
-	
-    void activateTouch() {
-        tDetect.enabled = true;
-    }
 
-    void deactivateTouch() {
-        tDetect.enabled = false;
+        //Ponemos la máxima puntuación en función del número de bloques
+        maxPuntuacion = boardManager.numTiles() * 35;
+        UIManager.InitPuntuacion(maxPuntuacion);
+	}
+    public void IncrementPoints() {
+        Puntuacion += PAcumulado;
+        PAcumulado += 10;
+        UIManager.PuntuacionChanged(Puntuacion);
     }
-    public void ChangeState(LevelState state) {
-        State = state;
-     }
+    public void LaunchBalls(Vector2 direction)
+    {
+        UIManager.toggleBottomMenu();
+        bSpawn.spawnBalls(GetNumBalls(), direction);
+        hideBallSink();
+
+    }
     public void onLastBallArrived() {
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);
         bSpawn.gameObject.SetActive(true);
         tDetect.gameObject.SetActive(true);
-        GetComponent<BoardManager>().StepForwardBlocks();
+        boardManager.StepForwardBlocks();
+        PAcumulado = 10;
+
+        UIManager.toggleBottomMenu();
+    }
+    public void ChangeState(LevelState state) {
+        State = state;
+    }
+    //Métodos que activan y desactivan el TOUCH
+    void activateTouch() {
+        tDetect.enabled = true;
+    }
+    
+    void deactivateTouch() {
+        tDetect.enabled = false;
     }
 
     public uint GetNumBalls() { return _numBalls; }

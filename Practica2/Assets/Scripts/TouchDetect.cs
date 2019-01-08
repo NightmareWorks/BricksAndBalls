@@ -61,8 +61,7 @@ public class TouchDetect : MonoBehaviour {
         if (launch)
         {
             direction = direction.normalized;
-            bSpawn.spawnBalls(lvMgr.GetNumBalls(), direction);
-            lvMgr.hideBallSink();
+            lvMgr.LaunchBalls(direction);
             launch = false;
 
             //Y desactiva este componente

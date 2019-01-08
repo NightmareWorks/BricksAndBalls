@@ -11,16 +11,18 @@ public class Block : MonoBehaviour {
     private int posX, posY;
     [Tooltip("Vida")]
     public TextMesh txt;
+    private AudioSource audioSource;
 
     public BoardManager boardManager;
 
 	// Use this for initialization
 	void Start () {
-        
+        audioSource = GetComponent<AudioSource>();
     }
     public bool GetFall() { return fall; }
     private void OnCollisionExit2D(Collision2D collision)
     {
+        audioSource.Play();
         --_life;
         if (_life <= 0) {
             boardManager.DeleteTile(this);

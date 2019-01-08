@@ -24,6 +24,7 @@ public class BoardManager : MonoBehaviour {
     public void DeleteTile(Block b) {
         _board.Remove(b);
         Destroy(b.gameObject);
+        LevelManager.instance.IncrementPoints();
     }
     public bool StepForwardBlocks() {
         foreach (Block b in _board) {
@@ -73,5 +74,8 @@ public class BoardManager : MonoBehaviour {
     }
     public Vector3 GetTam() {
         return tamScale;
+    }
+    public int numTiles() {
+        return _board.Count;
     }
 }
