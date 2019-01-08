@@ -9,7 +9,6 @@ public class LevelManager : MonoBehaviour {
     public Advertising adv;
     public TouchDetect tDetect;
 
-    public RectTransform CanvasJuego;
 
     [Range(1,312)]
     public int Level = 1;
