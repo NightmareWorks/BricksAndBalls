@@ -31,9 +31,11 @@ public class BoardManager : MonoBehaviour {
             {
                 b.SetPos(b.GetPosX(), b.GetPosY() - 1);
                 if (b.GetPosY() < 0)
-                    Debug.Log("HAS PERDIDO");
+                {
+                    LevelManager.instance.ChangeState(LevelState.DEAD);
+                }
                 else if (b.GetPosY() == 0)
-                    Debug.Log("DANGER ZONE");
+                    LevelManager.instance.ChangeState(LevelState.DANGER);
                 //Si la resta es menor se acaba el juego.
                 b.gameObject.transform.position = new Vector3(-posIni.x + tamScale.x * b.GetPosX(), posIni.y + tamScale.y * b.GetPosY(), 10);
             }
@@ -49,7 +51,6 @@ public class BoardManager : MonoBehaviour {
         MarginX = (Screen.width - tamX * 11) / 2;
         MarginY = (Screen.height - tamX * 14) / 2;
 
-        Debug.Log("MarginX " + MarginX + "MarginY " + MarginY);
 
         Vector3 m = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - MarginX, Screen.height - MarginY, 0));
         //Tamaño al que escalar

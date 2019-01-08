@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// BordersSetter class.
+/// Contiene los métodos que posicionan los bordes y UI del juego.
+/// </summary>
 public class BordersSetter : MonoBehaviour {
 
     public BoxCollider2D top, right, left, bot;

@@ -1,19 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-enum LevelState { PLAY, PAUSE, DANGER, DEAD};
+public enum LevelState { PLAY, PAUSE, DANGER, DEAD};
 public class LevelManager : MonoBehaviour {
+    public static LevelManager instance = null;
     private BallSpawner bSpawn;
-    public BallSink bSink;
+    private BallSink bSink;
     public DeathZone dZone;
     public Advertising adv;
     public TouchDetect tDetect;
 
+    private LevelState State;
 
     [Range(1,312)]
     public int Level = 1;
 
     private uint _numBalls;
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        //Sets this to not be destroyed when reloading scene
+        DontDestroyOnLoad(gameObject);
+        bSink = GetComponent<BallSink>();
+
+        //Call the InitGame function to initialize the first level 
+        //InitGame();
+    }
 
     // Use this for initialization
     void Start () {
@@ -23,7 +39,9 @@ public class LevelManager : MonoBehaviour {
 
         // 1.Empieza el nivel y coloca el bSink y el bSpawn, se añade una estrella al score
         bSink.hide();
-        dZone.init(this,bSink);
+        dZone.init(bSink);
+
+        //Game Manager
         _numBalls = 50;
 
         Vector3 tam = GetComponent<BoardManager>().GetTam();
@@ -47,7 +65,9 @@ public class LevelManager : MonoBehaviour {
     void deactivateTouch() {
         tDetect.enabled = false;
     }
-
+    public void ChangeState(LevelState state) {
+        State = state;
+     }
     public void onLastBallArrived() {
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);

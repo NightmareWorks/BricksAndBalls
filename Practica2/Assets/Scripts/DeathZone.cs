@@ -17,8 +17,7 @@ public class DeathZone : MonoBehaviour {
 	}*/
 
     //Initializes it with the ballSink it needs to work
-    public void init(LevelManager lvM, BallSink bs) {
-        _lvMgr = lvM;
+    public void init(BallSink bs) {
         _bSink = bs;
     }
 
@@ -26,9 +25,9 @@ public class DeathZone : MonoBehaviour {
     public void llegaBola() {
         _bSink.setNumBalls(_bSink.getNumBalls() + 1);
         //If all balls have arrived
-        if (_bSink.getNumBalls() == _lvMgr.GetNumBalls())
+        if (_bSink.getNumBalls() == LevelManager.instance.GetNumBalls())
         {
-            _lvMgr.onLastBallArrived();
+            LevelManager.instance.onLastBallArrived();
             firstOne = true;
         }
     }
