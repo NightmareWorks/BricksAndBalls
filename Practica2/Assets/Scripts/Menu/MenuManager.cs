@@ -18,6 +18,13 @@ public class MenuManager : MonoBehaviour
     //Window to shop
     [SerializeField]
     private GameObject _shopPopUp;
+    [SerializeField]
+    private GameObject _cantBuyPop;
+
+    //Power ups ingame that cam be purchased at the shop
+    [SerializeField]
+    private Text _numEQ;
+    private uint _numEarthQuakes;
 
     //Number of rubys and stars
     //These ints must be assigned at start()
@@ -35,9 +42,16 @@ public class MenuManager : MonoBehaviour
     private LevelButton[] _levelButtons;
     private uint _lvCount;
 
+    //Advertisement component
+    private Advertising _ads;
+
     // Start is called before the first frame update
     void Start()
     {
+        //Inits ads
+        //_ads = GetComponent<Advertising>();
+        //_ads.init(this);
+
         //Initializes the number of buttons and the levelFiller
         _levelButtons = new LevelButton[_numLevels];
         _lvCount = 0;
@@ -66,6 +80,10 @@ public class MenuManager : MonoBehaviour
         _rubysTxt.text = _numRubys.ToString();
         _rubysTxtShop.text = _numRubys.ToString();
         _starsTxt.text = _totalStars.ToString();
+
+        //Assigns the numbers for the power ups
+        _numEarthQuakes = 0;
+        _numEQ.text = _numEarthQuakes.ToString();
     }
 
     //Introduces a button into the array (called in the filler)
@@ -74,7 +92,7 @@ public class MenuManager : MonoBehaviour
         ++_lvCount;
     }
 
-    ////Callbacks for the shop buttons////
+    ////Callbacks for the exit button////
     public void showExitPopUp() {
         _exitPopUp.SetActive(true);
     }
@@ -100,10 +118,37 @@ public class MenuManager : MonoBehaviour
         _shopPopUp.SetActive(false);
     }
 
-    public void buyCositaas()
+    public void hideCantBuyPopUp() {
+        _cantBuyPop.SetActive(false);
+    }
+
+    public void buyEarthquackes()
     {
-        //Guarda las cosas y sale
-        Application.Quit();
+        if (_numRubys >= 200)
+        {
+            _numRubys -= 200;
+            _rubysTxt.text = _numRubys.ToString();
+            _rubysTxtShop.text = _numRubys.ToString();
+            _numEarthQuakes++;
+            _numEQ.text = _numEarthQuakes.ToString();
+        }
+        else {
+            _cantBuyPop.SetActive(true);
+        }
+    }
+    //////////////////////////////////////
+    
+    ////Callbacks for the ad button////
+    public void adButtonCallback()
+    {
+        _ads.ShowRewardedAd();
+    }
+
+    //This method is called from the advertising class
+    public void getRubys(uint n) {
+        _numRubys += n;
+        _rubysTxt.text = _numRubys.ToString();
+        _rubysTxtShop.text = _numRubys.ToString();
     }
     //////////////////////////////////////
 }

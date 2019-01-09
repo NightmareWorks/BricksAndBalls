@@ -59,6 +59,7 @@ public class Advertising : MonoBehaviour {
                 //
                 // YOUR CODE TO REWARD THE GAMER
                 // Give coins etc.
+                _mMan.getRubys(200);
                 break;
             case ShowResult.Skipped:
                 Debug.Log("The ad was skipped before reaching the end.");
@@ -85,6 +86,13 @@ public class Advertising : MonoBehaviour {
         {}
     }
 
+    //Inits with menu manager
+    public void init(MenuManager mm)
+    {
+        _mMan = mm;
+    }
+
+    private MenuManager _mMan;
     // Update is called once per frame
     /*void Update () {
 		
