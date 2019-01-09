@@ -9,12 +9,12 @@ public class LevelFiller : MonoBehaviour
     private LevelButton _levelPrefab;
 
     private uint _numLevels;
-    private MenuManager _menuManager;
+    private GameManager _menuManager;
 
     //Inits this component with the manager
     //It's needed to push the created buttons into the
     //manager list
-    public void init(MenuManager mMgr, uint numLevels )
+    public void init(GameManager mMgr, uint numLevels )
     {
         _menuManager = mMgr;
         _numLevels = numLevels;

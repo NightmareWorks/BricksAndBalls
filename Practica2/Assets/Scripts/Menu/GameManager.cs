@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     //Component that fills the canvas with the level buttons
     [SerializeField]
@@ -68,9 +68,8 @@ public class MenuManager : MonoBehaviour
 
 
         //Si no lo hay, inicializa el nivel 1 con 0 estrellas, pone 400 rubíes y ningún item
-        _levelButtons[1].init(2, true);
         _levelButtons[0].init(1, true);
-        for (uint i = 3; i <= _numLevels; i++) {
+        for (uint i = 2; i <= _numLevels; i++) {
             _levelButtons[i-1].init(i, false);
         }
         _numRubys = 400;

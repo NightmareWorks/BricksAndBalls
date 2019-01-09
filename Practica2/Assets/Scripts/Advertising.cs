@@ -87,12 +87,12 @@ public class Advertising : MonoBehaviour {
     }
 
     //Inits with menu manager
-    public void init(MenuManager mm)
+    public void init(GameManager mm)
     {
         _mMan = mm;
     }
 
-    private MenuManager _mMan;
+    private GameManager _mMan;
     // Update is called once per frame
     /*void Update () {
 		
