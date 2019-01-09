@@ -49,8 +49,8 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         //Inits ads
-        //_ads = GetComponent<Advertising>();
-        //_ads.init(this);
+        _ads = GetComponent<Advertising>();
+        _ads.init(this);
 
         //Initializes the number of buttons and the levelFiller
         _levelButtons = new LevelButton[_numLevels];

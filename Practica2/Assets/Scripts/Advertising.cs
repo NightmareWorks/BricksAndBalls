@@ -8,7 +8,7 @@ using UnityEngine.Advertisements;
 public class Advertising : MonoBehaviour {
 
     [SerializeField]
-    private string GameId;
+    private string GameId = "2989758";
     /*
     [SerializeField]
     private bool testMode;*/
@@ -18,7 +18,7 @@ public class Advertising : MonoBehaviour {
     /// </summary>
     public void ShowDefaultAd()
     {
-#if UNITY_ADS
+//#if UNITY_ADS
 
         if (!Advertisement.IsReady())
         {
@@ -26,7 +26,7 @@ public class Advertising : MonoBehaviour {
             return;
         }
         Advertisement.Show();
-#endif
+//#endif
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class Advertising : MonoBehaviour {
     {
         const string RewardedPlacementId = "advertisementtest";
 
-#if UNITY_ADS
+//#if UNITY_ADS
         if (!Advertisement.IsReady(RewardedPlacementId))
         {
             Debug.Log(string.Format("Ads not ready for placement '{0}'", RewardedPlacementId));
@@ -45,11 +45,11 @@ public class Advertising : MonoBehaviour {
 
         var options = new ShowOptions { resultCallback = HandleShowResult };
         Advertisement.Show(RewardedPlacementId, options);
-#endif
+//#endif
     }
 
     //Callback for the previous function
-#if UNITY_ADS
+//#if UNITY_ADS
     private void HandleShowResult(ShowResult result)
     {
         switch (result)
@@ -70,20 +70,20 @@ public class Advertising : MonoBehaviour {
         }
     }
 
-#endif
+//#endif
 
     // Use this for initialization
     void Start () {
-//#if !UNITY_ADS // If the Ads service is not enabled...
+#if !UNITY_ADS // If the Ads service is not enabled...
         if (Advertisement.isSupported) { // If runtime platform is supported...
             Advertisement.Initialize(GameId, true); // ...initialize.
         }
-//#endif
-
         // Wait until Unity Ads is initialized,
         //  and the default ad placement is ready.
         while (!Advertisement.isInitialized || !Advertisement.IsReady())
         {}
+        Debug.Log("Init ad");
+#endif
     }
 
     //Inits with menu manager
