@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum LevelState { PLAY, PAUSE, DANGER, DEAD};
+public enum LevelState { PLAY, LAUNCHED, FAST, PAUSE, DANGER, DEAD};
 public class LevelManager : MonoBehaviour {
     public static LevelManager instance = null;
     private BallSpawner bSpawn;
@@ -21,6 +21,8 @@ public class LevelManager : MonoBehaviour {
     private int Puntuacion = 0;
     private int PAcumulado = 10;
     private int maxPuntuacion;
+
+    private int framesTurno = 0;
     
     private uint _numBalls;
     private void Awake()
@@ -47,7 +49,7 @@ public class LevelManager : MonoBehaviour {
 
         // 1.Empieza el nivel y coloca el bSink y el bSpawn, se añade una estrella al score
         bSink.hide();
-        dZone.init(bSink);
+        dZone.Init(bSink);
 
         //Game Manager
         _numBalls = 50;
@@ -62,47 +64,86 @@ public class LevelManager : MonoBehaviour {
         ///Hay que añadir una estrella a la puntuación 
 
         // 2.Se activa el detector de pulsación
-        tDetect.init(this,bSpawn);
+        tDetect.Init(bSpawn);
 
         //Ponemos la máxima puntuación en función del número de bloques
         maxPuntuacion = boardManager.numTiles() * 35;
         UIManager.InitPuntuacion(maxPuntuacion);
 	}
+
+    private void Update()
+    {
+        if(State == LevelState.LAUNCHED) {
+            if(Time.frameCount - framesTurno > 300) {
+                ChangeState(LevelState.FAST);
+            }
+        }
+    }
+
     public void IncrementPoints() {
         Puntuacion += PAcumulado;
         PAcumulado += 10;
         UIManager.PuntuacionChanged(Puntuacion);
     }
+
+    //Nuevo turno
     public void LaunchBalls(Vector2 direction)
     {
-        UIManager.toggleBottomMenu();
+        framesTurno = Time.frameCount;
+        ChangeState(LevelState.LAUNCHED);
+        UIManager.ToggleBottomMenu();
         bSpawn.spawnBalls(GetNumBalls(), direction);
-        hideBallSink();
-
+        HideBallSink();
     }
-    public void onLastBallArrived() {
+
+    //Fin del turno
+    public void OnLastBallArrived() {
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);
         bSpawn.gameObject.SetActive(true);
         tDetect.gameObject.SetActive(true);
         boardManager.StepForwardBlocks();
         PAcumulado = 10;
-
-        UIManager.toggleBottomMenu();
+        ChangeState(LevelState.PLAY);
+       UIManager.ToggleBottomMenu();
     }
+
     public void ChangeState(LevelState state) {
         State = state;
+        switch (State)
+        {
+            case LevelState.PLAY:
+                ActivateTouch();
+                Time.timeScale = 1;
+                break;
+            case LevelState.FAST:
+                Time.timeScale = 2;
+                break;
+            case LevelState.PAUSE:
+                DeactivateTouch();
+                Time.timeScale = 0;
+                break;
+            case LevelState.DANGER:
+                break;
+            case LevelState.DEAD:
+                break;
+
+        }
     }
+
     //Métodos que activan y desactivan el TOUCH
-    void activateTouch() {
+    void ActivateTouch() {
         tDetect.enabled = true;
     }
     
-    void deactivateTouch() {
+    void DeactivateTouch() {
         tDetect.enabled = false;
     }
 
     public uint GetNumBalls() { return _numBalls; }
 
-    public void hideBallSink() { bSink.hide(); }
+    public void HideBallSink() { bSink.hide(); }
+    public void SetState(LevelState state) {
+        State = state;
+    }
 }

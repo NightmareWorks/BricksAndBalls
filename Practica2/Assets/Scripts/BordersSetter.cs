@@ -19,9 +19,10 @@ public class BordersSetter : MonoBehaviour {
         tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 18);
         MarginX = (Screen.width - tamX * 11) / 2;
         MarginY = (Screen.height - tamX * 14) / 2;
-        Vector3 m = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - MarginX, Screen.height - MarginY, 0));
 
+        //Tamaño de los tiles en coordenadas del mundo
         Vector3 auxTam = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-MarginX*2, 1, Camera.main.nearClipPlane)) - Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
+
         //Colliders superior e inferior
         top.gameObject.transform.localScale = auxTam;
         bot.gameObject.transform.localScale = auxTam;

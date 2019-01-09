@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour {
 
-
-
     // Use this for initialization
     /*void Start () {
 		
@@ -17,17 +15,19 @@ public class DeathZone : MonoBehaviour {
 	}*/
 
     //Initializes it with the ballSink it needs to work
-    public void init(BallSink bs) {
+    public void Init(BallSink bs) {
         _bSink = bs;
     }
 
-    //Changes the sink numballs (Called when a ball arrives)
-    public void llegaBola() {
+    /// <summary>
+    /// Changes the sink numballs (Called when a ball arrives)
+    /// </summary>
+    public void LlegaBola() {
         _bSink.setNumBalls(_bSink.getNumBalls() + 1);
         //If all balls have arrived
         if (_bSink.getNumBalls() == LevelManager.instance.GetNumBalls())
         {
-            LevelManager.instance.onLastBallArrived();
+            LevelManager.instance.OnLastBallArrived();
             firstOne = true;
         }
     }
@@ -45,7 +45,7 @@ public class DeathZone : MonoBehaviour {
 
         //First of all we make sure the ball is returning
         //and it didn't collided while being launched
-        if (thisBall.isReturning())
+        if (thisBall.IsReturning())
         {
             if (firstOne)
             {
@@ -57,8 +57,8 @@ public class DeathZone : MonoBehaviour {
             }
             else
             {
-                thisBall.stop();
-                thisBall.moveToPoint(_bSink.getPos(), 10, llegaBola);
+                thisBall.Stop();
+                thisBall.MoveToPoint(_bSink.getPos(), 10, LlegaBola);
             }
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public RectTransform[] menuBottom= new RectTransform[2];
+    public RectTransform menuPausa;
     public StarsUI StarsPuntuacion;
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,7 @@ public class UIManager : MonoBehaviour
     {
 
     }
-    public void toggleBottomMenu()
+    public void ToggleBottomMenu()
     {
         menuBottom[0].gameObject.SetActive(!menuBottom[0].gameObject.activeSelf);
         menuBottom[1].gameObject.SetActive(!menuBottom[1].gameObject.activeSelf);
@@ -27,5 +28,10 @@ public class UIManager : MonoBehaviour
     }
     public void PuntuacionChanged(float Puntuacion) {
         StarsPuntuacion.OnValueChanged(Puntuacion);
+    }
+
+    public void TogglePausaMenu()
+    {
+        menuPausa.gameObject.SetActive(!menuPausa.gameObject.activeSelf);
     }
 }

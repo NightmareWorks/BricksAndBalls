@@ -20,9 +20,9 @@ public class TouchDetect : MonoBehaviour {
 		
 	}*/
 
-    public void init(LevelManager lvM,  BallSpawner bS)
+    public void Init(BallSpawner bS)
     {
-        lvMgr = lvM;
+        lvMgr = LevelManager.instance;
         bSpawn = bS;
         cam = Camera.main;
     }

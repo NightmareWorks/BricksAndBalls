@@ -36,8 +36,8 @@ public class BallSpawner : MonoBehaviour {
     }
 
     public void setLaunchPos(float x, float y) {
-        Vector2 size = ball.GetComponent<SpriteRenderer>().size/2;
-        posX = x; posY = y; //+size.y;
+        //Vector2 size = ball.GetComponent<SpriteRenderer>().size/2;
+        posX = x; posY = y;
     }
     public void setLaunchPosX(float x)
     {
