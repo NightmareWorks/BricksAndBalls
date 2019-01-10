@@ -14,7 +14,6 @@ public class LevelManager : MonoBehaviour {
 
     public bool changeLevel = false;
 
-
     private BoardManager boardManager;
 
     private LevelState State = LevelState.PLAY;
@@ -67,7 +66,7 @@ public class LevelManager : MonoBehaviour {
         ///Hay que añadir una estrella a la puntuación 
 
         // 2.Se activa el detector de pulsación
-        tDetect.Init(bSpawn);
+        tDetect.Init(bSpawn, tam.x*7);
 
         //Ponemos la máxima puntuación en función del número de bloques
         maxPuntuacion = boardManager.numTiles() * 35;
@@ -106,12 +105,15 @@ public class LevelManager : MonoBehaviour {
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);
         bSpawn.gameObject.SetActive(true);
-        tDetect.gameObject.SetActive(true);
+        ActivateTouch();
 
         boardManager.StepForwardBlocks();
         PAcumulado = 10;
         if (changeLevel)
-            NextLevel();
+        {
+            UIManager.VictoryPopUp();
+            DeactivateTouch();
+        }
         ChangeState(LevelState.PLAY);
         UIManager.ToggleBottomMenu();
     }
@@ -121,7 +123,6 @@ public class LevelManager : MonoBehaviour {
         switch (State)
         {
             case LevelState.PLAY:
-                ActivateTouch();
                 Time.timeScale = 1;
                 break;
             case LevelState.FAST:
@@ -147,14 +148,18 @@ public class LevelManager : MonoBehaviour {
         boardManager.SetLevel(Level);
         ChangeState(LevelState.PLAY);
         changeLevel = false;
+        //Sets the ballSpawner and sink in the center again
+        bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
+        bSink.setPos(0, dZone.gameObject.transform.position.y);
+
     }
     //Métodos que activan y desactivan el TOUCH
-    void ActivateTouch() {
-        tDetect.enabled = true;
+    public void ActivateTouch() {
+        tDetect.gameObject.SetActive(true);
     }
     
-    void DeactivateTouch() {
-        tDetect.enabled = false;
+    public void DeactivateTouch() {
+        tDetect.gameObject.SetActive(false);
     }
     public BoardManager GetBoardManager() {
         return boardManager;

@@ -9,6 +9,8 @@ public class TouchDetect : MonoBehaviour {
     private LevelManager lvMgr;
     private Camera cam;
 
+    //The touch must be lower than this height
+    private float _maxH;
 
     private Vector2 direction;
     private Vector2 origin;
@@ -20,11 +22,12 @@ public class TouchDetect : MonoBehaviour {
 		
 	}*/
 
-    public void Init(BallSpawner bS)
+    public void Init(BallSpawner bS, float maxHeight)
     {
         lvMgr = LevelManager.instance;
         bSpawn = bS;
         cam = Camera.main;
+        _maxH = maxHeight;
     }
 
     // Update is called once per frame
@@ -34,14 +37,14 @@ public class TouchDetect : MonoBehaviour {
         if (Input.GetMouseButtonUp(0))
         {
             destiny = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
             //Convert pixel coordinates to world coordinates
             Vector3 point = cam.ScreenToWorldPoint(new Vector3(destiny.x, destiny.y, cam.nearClipPlane));
             destiny.x = point.x; destiny.y = point.y;
             origin = bSpawn.getLaunchPos();
 
             direction = destiny - origin;
-            launch = true;
+            if(direction.y > 0.6 && destiny.y < _maxH)
+                launch = true;
         }
 #elif UNITY_ANDROID 
         if (Input.touchCount == 1) {
@@ -54,7 +57,8 @@ public class TouchDetect : MonoBehaviour {
             origin = bSpawn.getLaunchPos();
 
             direction = destiny - origin;
-            launch = true;
+            if(direction.y > 0.6)
+                launch = true;
         }
 #endif
         //Normalizes the direction vector and calls the ballSpawner

@@ -7,10 +7,14 @@ public class UIManager : MonoBehaviour
     public RectTransform[] menuBottom= new RectTransform[2];
     public RectTransform menuPausa;
     public StarsUI StarsPuntuacion;
+
+    //Window to next level or menu
+    [SerializeField]
+    private GameObject _victoryPopUp;
+
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -33,5 +37,15 @@ public class UIManager : MonoBehaviour
     public void TogglePausaMenu()
     {
         menuPausa.gameObject.SetActive(!menuPausa.gameObject.activeSelf);
+    }
+
+    //Callback called when level is finished
+    public void VictoryPopUp() {
+        _victoryPopUp.SetActive(true);
+    }
+
+    public void hideVictoryPopUp()
+    {
+        _victoryPopUp.SetActive(false);
     }
 }
