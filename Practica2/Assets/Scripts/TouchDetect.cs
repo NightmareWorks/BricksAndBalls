@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TouchDetect : MonoBehaviour {
 
@@ -19,9 +20,9 @@ public class TouchDetect : MonoBehaviour {
 		
 	}*/
 
-    public void init(LevelManager lvM,  BallSpawner bS)
+    public void Init(BallSpawner bS)
     {
-        lvMgr = lvM;
+        lvMgr = LevelManager.instance;
         bSpawn = bS;
         cam = Camera.main;
     }
@@ -60,8 +61,7 @@ public class TouchDetect : MonoBehaviour {
         if (launch)
         {
             direction = direction.normalized;
-            bSpawn.spawnBalls(lvMgr.GetNumBalls(), direction);
-            lvMgr.hideBallSink();
+            lvMgr.LaunchBalls(direction);
             launch = false;
 
             //Y desactiva este componente

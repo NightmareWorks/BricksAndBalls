@@ -7,20 +7,23 @@ public class Block : MonoBehaviour {
 
     private int _life=0;
     private int _type;
-    private bool fall;
+    private bool fall = true;
     private int posX, posY;
     [Tooltip("Vida")]
-    public Text txt;
+    public TextMesh txt;
+    private AudioSource audioSource;
 
-    public BoardManager boardManager;
+    private BoardManager boardManager;
 
 	// Use this for initialization
 	void Start () {
-    
+        audioSource = GetComponent<AudioSource>();
+        boardManager = LevelManager.instance.GetBoardManager();
     }
     public bool GetFall() { return fall; }
     private void OnCollisionExit2D(Collision2D collision)
     {
+        audioSource.Play();
         --_life;
         if (_life <= 0) {
             boardManager.DeleteTile(this);
@@ -30,8 +33,10 @@ public class Block : MonoBehaviour {
     }
     public void SetType(int type) {
         _type = type;
+
         Sprite myBlock = Resources.Load("Images/game_img_block" + type + "_1", typeof(Sprite)) as Sprite;
         gameObject.GetComponent<SpriteRenderer>().sprite = myBlock;
+        gameObject.AddComponent<PolygonCollider2D>();
         switch (_type)
         {
             case 10:
@@ -48,16 +53,21 @@ public class Block : MonoBehaviour {
         if (_type == 2 || _type == 10)
             _life *= 2;
 
-        if(life!=0)
+        if (life != 0)
+        {
             txt.text = _life.ToString();
+        }
+
     }
     public void SetPos(int x, int y) {
         posX = x;
         posY = y;
+        mask();
     }
     public void invertPosY(int y)
     {
         posY = y-posY;
+        mask();
     }
     public int GetPosX()
     {
@@ -66,5 +76,15 @@ public class Block : MonoBehaviour {
     public int GetPosY()
     {
         return posY;
+    }
+    private void mask() {
+        if (posY > 11)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

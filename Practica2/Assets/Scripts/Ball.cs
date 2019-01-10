@@ -13,8 +13,9 @@ public class Ball : MonoBehaviour {
     /*void Update () {
 		
 	}*/
-    public void init() {
+    public void init(Vector3 tam) {
         rb = GetComponent<Rigidbody2D>();
+        gameObject.transform.localScale = tam;
     }
 
     public void startMove(Vector2 posIni, Vector2 speed) {
@@ -23,17 +24,17 @@ public class Ball : MonoBehaviour {
         rb.AddForce(/*new Vector2(5,50)*/speed);
     }
 
-    public void stop() {
+    public void Stop() {
         rb.velocity = Vector3.zero;
     }
 
-    public void moveToPoint(Vector2 position, uint numPasos, System.Action callback = null)
+    public void MoveToPoint(Vector2 position, uint numPasos, System.Action callback = null)
     {
-        StartCoroutine(moveToCoroutine(position, numPasos, callback));
+        StartCoroutine(MoveToCoroutine(position, numPasos, callback));
     }
 
-    //A este metodo se le puede pasar un Callback para que lo lance cuando haya terminado
-    private IEnumerator moveToCoroutine(Vector2 position, uint numPasos, System.Action callback) {
+    //A este método se le puede pasar un Callback para que lo lance cuando haya terminado
+    private IEnumerator MoveToCoroutine(Vector2 position, uint numPasos, System.Action callback) {
         Vector2 moveTo = new Vector2((position.x - transform.position.x) / numPasos, (position.y - transform.position.y)/numPasos);
         for (int i = 0; i < numPasos; i++) {
             transform.position = new Vector3(transform.position.x + moveTo.x, transform.position.y + moveTo.y, 0);
@@ -43,7 +44,7 @@ public class Ball : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public bool isReturning() {
+    public bool IsReturning() {
         return rb.velocity.y < 0;
     }
 

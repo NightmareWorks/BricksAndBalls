@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using System.Text;
+
 using UnityEngine.UI;
 
 
@@ -10,32 +12,40 @@ public class ReadMap : MonoBehaviour
 {
     [Tooltip("Prefab block")]
     public Block blockGObj;
+    private Transform parent;
 
     public int y;
     public List<Block> loadMap(int level) {
+        parent = new GameObject("Blocks").transform;
+
         List<Block> _blocks = new List<Block>();
-        string ruta = "Assets/Maps/mapdata"+ level + ".txt";
-        
+        TextAsset text = Resources.Load("Maps/mapdata" + level) as TextAsset;
+        string[] mapas = text.text.Split(new char[] { '\r','\n' }, StringSplitOptions.RemoveEmptyEntries);
+        int iLine= 0;
+
         try
         {
             // Create an instance of StreamReader to read from a file.
             // The using statement also closes the StreamReader.
-            using (StreamReader sr = new StreamReader(ruta))
+            if (mapas.Length>0)
             {
                 string line;
                 y = 0;
                 // Read and display lines from the file until the end of 
                 // the file is reached.
-                while ((line = sr.ReadLine()) != null) {
+                while (iLine <= mapas.Length) {
+                    line = mapas[iLine];
                     if (line == "[layer]") {
-                        line = sr.ReadLine(); //Type
+                        iLine++;
+                        line = mapas[iLine]; //Type
                         if (line == "type=Tile Layer 1")
                         {
-                            sr.ReadLine(); // Data
+                            iLine++; // Saltamos línea Data
                             bool ended = false;
                             while(!ended)
                             {
-                                line = sr.ReadLine();
+                                iLine++;
+                                line = mapas[iLine];
                                 //Compruebo si es la última linea
                                 if (line.EndsWith(".")) {
                                     line = line.Substring(0, line.Length - 1);
@@ -47,7 +57,7 @@ public class ReadMap : MonoBehaviour
 
                                 foreach (string _aux in casillas) {
                                     if (_aux != "0" && _aux != "") {
-                                        Block _block = Instantiate(blockGObj);
+                                        Block _block = Instantiate(blockGObj,parent);
                                         int type;
                                         int.TryParse(_aux, out type);
                                         _block.SetType(type);
@@ -60,14 +70,16 @@ public class ReadMap : MonoBehaviour
                             }
                         }
                         else if (line == "type=Tile Layer 2") {
-                            sr.ReadLine();
+                            iLine++;
+                            line = mapas[iLine];
                             bool ended = false;
                             int i = 0;//Casilla que necesita la vida
                             int b = 0;//Índice que marca las casillas leídas
                             int id = _blocks[0].GetPosX()+ _blocks[0].GetPosY() * 11;//Id de la casilla que queremos
                             while (!ended)
                             {
-                                line = sr.ReadLine();
+                                iLine++;
+                                line = mapas[iLine];
                                 //Compruebo si es la última linea
                                 if (line.EndsWith("."))
                                 {
@@ -93,8 +105,9 @@ public class ReadMap : MonoBehaviour
                             }// Fin del while
                         }//Fin if layer 2
                     }
+                    iLine++;
                 }
-                sr.Close();
+                blockGObj.enabled=false;
             }
         }
         catch (Exception e)
