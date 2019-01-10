@@ -11,6 +11,7 @@ public class BoardManager : MonoBehaviour {
     [SerializeField]
     private ParticleSystem ParticleSystem;
     private Vector3 tamScale, posIni;
+    bool levelFinished=false;
     // Use this for initialization
     void Start () {
        
@@ -18,8 +19,8 @@ public class BoardManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (_board.Count == 0) {
-            Debug.Log("Nivel terminado");
+        if (!levelFinished && _board.Count == 0) {
+            LevelManager.instance.ChangeState(LevelState.NEXT);
         }
 	}
     public void DeleteTile(Block b) {
@@ -69,6 +70,12 @@ public class BoardManager : MonoBehaviour {
             b.gameObject.transform.position = new Vector3(-posIni.x + tamScale.x * b.GetPosX(), posIni.y + tamScale.y * b.GetPosY(), 10);
         }
    
+    }
+    public void DestroyBoard()
+    {
+        foreach(Block b in _board) {
+            Destroy(b.gameObject);
+        }
     }
     public Vector3 GetTam() {
         return tamScale;

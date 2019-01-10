@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum LevelState { PLAY, LAUNCHED, FAST, PAUSE, DANGER, DEAD};
+
+public enum LevelState { PLAY, LAUNCHED, FAST, PAUSE, DANGER, DEAD, NEXT};
 public class LevelManager : MonoBehaviour {
     public static LevelManager instance = null;
     private BallSpawner bSpawn;
@@ -11,10 +12,12 @@ public class LevelManager : MonoBehaviour {
     public TouchDetect tDetect;
     public UIManager UIManager;
 
+    public bool changeLevel = false;
+
 
     private BoardManager boardManager;
 
-    private LevelState State;
+    private LevelState State = LevelState.PLAY;
 
     [Range(1,312)]
     public int Level = 1;
@@ -35,15 +38,15 @@ public class LevelManager : MonoBehaviour {
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
         bSink = GetComponent<BallSink>();
-
+        boardManager = GetComponent<BoardManager>();
+        bSpawn = GetComponent<BallSpawner>();
         //Call the InitGame function to initialize the first level 
         //InitGame();
     }
 
     // Use this for initialization
     void Start () {
-        boardManager = GetComponent<BoardManager>();
-        bSpawn = this.gameObject.GetComponent<BallSpawner>();
+        ChangeState(LevelState.PLAY);
         //Carga el txt del nivel seleccionado
         boardManager.SetLevel(Level);
 
@@ -74,7 +77,9 @@ public class LevelManager : MonoBehaviour {
     private void Update()
     {
         if(State == LevelState.LAUNCHED) {
-            if(Time.frameCount - framesTurno > 300) {
+            float time = Time.frameCount;
+            if(Mathf.Abs(Time.frameCount - framesTurno) > 350) {
+                Debug.Log("FAAAAST");
                 ChangeState(LevelState.FAST);
             }
         }
@@ -102,10 +107,13 @@ public class LevelManager : MonoBehaviour {
         bSpawn.setLaunchPos(pos.x, pos.y);
         bSpawn.gameObject.SetActive(true);
         tDetect.gameObject.SetActive(true);
+
         boardManager.StepForwardBlocks();
         PAcumulado = 10;
+        if (changeLevel)
+            NextLevel();
         ChangeState(LevelState.PLAY);
-       UIManager.ToggleBottomMenu();
+        UIManager.ToggleBottomMenu();
     }
 
     public void ChangeState(LevelState state) {
@@ -125,12 +133,21 @@ public class LevelManager : MonoBehaviour {
                 break;
             case LevelState.DANGER:
                 break;
+            case LevelState.NEXT:
+                changeLevel = true;
+                break;
             case LevelState.DEAD:
                 break;
 
         }
     }
-
+    public void NextLevel() {
+        Level++;
+        boardManager.DestroyBoard();
+        boardManager.SetLevel(Level);
+        ChangeState(LevelState.PLAY);
+        changeLevel = false;
+    }
     //Métodos que activan y desactivan el TOUCH
     void ActivateTouch() {
         tDetect.enabled = true;
@@ -139,11 +156,11 @@ public class LevelManager : MonoBehaviour {
     void DeactivateTouch() {
         tDetect.enabled = false;
     }
+    public BoardManager GetBoardManager() {
+        return boardManager;
+    }
 
     public uint GetNumBalls() { return _numBalls; }
 
     public void HideBallSink() { bSink.hide(); }
-    public void SetState(LevelState state) {
-        State = state;
-    }
 }

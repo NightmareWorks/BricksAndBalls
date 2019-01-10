@@ -8,10 +8,10 @@ public class ButtonManager : MonoBehaviour
     public void Pause()
     {
         GetComponent<UIManager>().TogglePausaMenu();
-        LevelManager.instance.SetState(LevelState.PAUSE);
+        LevelManager.instance.ChangeState(LevelState.PAUSE);
     }
     public void Play() {
         GetComponent<UIManager>().TogglePausaMenu();
-        LevelManager.instance.SetState(LevelState.PLAY);
+        LevelManager.instance.ChangeState(LevelState.PLAY);
     }
 }

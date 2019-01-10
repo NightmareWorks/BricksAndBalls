@@ -20,7 +20,7 @@ public class ReadMap : MonoBehaviour
 
         List<Block> _blocks = new List<Block>();
         TextAsset text = Resources.Load("Maps/mapdata" + level) as TextAsset;
-        string[] mapas = text.text.Split('\n');
+        string[] mapas = text.text.Split(new char[] { '\r','\n' }, StringSplitOptions.RemoveEmptyEntries);
         int iLine= 0;
 
         try

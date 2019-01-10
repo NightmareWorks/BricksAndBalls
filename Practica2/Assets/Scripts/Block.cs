@@ -13,11 +13,12 @@ public class Block : MonoBehaviour {
     public TextMesh txt;
     private AudioSource audioSource;
 
-    public BoardManager boardManager;
+    private BoardManager boardManager;
 
 	// Use this for initialization
 	void Start () {
         audioSource = GetComponent<AudioSource>();
+        boardManager = LevelManager.instance.GetBoardManager();
     }
     public bool GetFall() { return fall; }
     private void OnCollisionExit2D(Collision2D collision)
