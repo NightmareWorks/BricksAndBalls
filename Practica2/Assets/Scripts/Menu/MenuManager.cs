@@ -25,7 +25,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private Text _numEQ;
     private uint _numEarthQuakes;
-
+    [SerializeField]
+    private Text _numDR;
+    private uint _numDeleteRow;
+    [SerializeField]
+    private Text _AddBall;
+    private uint _numAddBall;
     //Number of rubys and stars
     //These ints must be assigned at start()
     //Both can be updated after watching ads or finishing levels
@@ -135,8 +140,39 @@ public class MenuManager : MonoBehaviour
             _cantBuyPop.SetActive(true);
         }
     }
+    public void BuyDeleteRow()
+    {
+        if (GameManager.instance.BuyPowerUp(PowerUp.DELETE))
+        {
+            _numRubys = GameManager.instance.GetRubies();
+            _rubysTxt.text = _numRubys.ToString();
+            _rubysTxtShop.text = _numRubys.ToString();
+            _numDeleteRow = GameManager.instance.GetNumPowerUp(PowerUp.DELETE);
+            _numDR.text = _numDeleteRow.ToString();
+        }
+        else
+        {
+            _cantBuyPop.SetActive(true);
+        }
+    }
+
+    public void BuyAddBall()
+    {
+        if (GameManager.instance.BuyPowerUp(PowerUp.EXTRABALL))
+        {
+            _numRubys = GameManager.instance.GetRubies();
+            _rubysTxt.text = _numRubys.ToString();
+            _rubysTxtShop.text = _numRubys.ToString();
+            _numAddBall = GameManager.instance.GetNumPowerUp(PowerUp.EXTRABALL);
+            _AddBall.text = _numAddBall.ToString();
+        }
+        else
+        {
+            _cantBuyPop.SetActive(true);
+        }
+    }
     //////////////////////////////////////
-    
+
     ////Callbacks for the ad button////
     public void AdButtonCallback()
     {

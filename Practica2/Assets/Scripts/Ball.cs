@@ -69,6 +69,10 @@ public class Ball : MonoBehaviour {
     public bool IsMovedByPhysics() {
         return rb.velocity.y != 0;
     }
+    public void ChangeDirX() {
+        float a = GameManager.instance.r.Next((int)-rb.velocity.x*10, (int)rb.velocity.x*10);
+        rb.velocity = new Vector2( a / 10, rb.velocity.y);
+    }
 
     private Rigidbody2D rb;
 }

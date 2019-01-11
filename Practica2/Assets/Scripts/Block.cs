@@ -26,6 +26,7 @@ public class Block : MonoBehaviour {
         audioSource.Play();
         --_life;
         if (_life <= 0) {
+            Logic(collision.gameObject);
             boardManager.DeleteTile(this);
         }
         else
@@ -93,6 +94,23 @@ public class Block : MonoBehaviour {
         else
         {
             gameObject.SetActive(true);
+        }
+    }
+    public void Logic(GameObject gameObject) {
+        switch (_type)
+        {
+            case 21:
+                LevelManager.instance.AddNewBall(1);
+                break;
+            case 22:
+                LevelManager.instance.AddNewBall(2);
+                break;
+            case 23:
+                LevelManager.instance.AddNewBall(3);
+                break;
+            case 24:
+                gameObject.GetComponent<Ball>().ChangeDirX();
+                break;
         }
     }
 }

@@ -35,11 +35,7 @@ public class UIManager : MonoBehaviour
         menuBottom[1].gameObject.SetActive(false);
     }
 
-    /*public void ToggleBottomMenu()
-    {
-        menuBottom[0].gameObject.SetActive(!menuBottom[0].gameObject.activeSelf);
-        menuBottom[1].gameObject.SetActive(!menuBottom[1].gameObject.activeSelf);
-    }*/
+
     public void InitPuntuacion(int maxPuntuacion) {
         StarsPuntuacion.Init(maxPuntuacion);
     }

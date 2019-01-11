@@ -75,7 +75,7 @@ public class BoardManager : MonoBehaviour {
 
     internal void DeleteRow()
     {
-        List<Block> aux = new List<Block>();
+        /*List<Block> aux = new List<Block>();
         bool changeLine = false;
         int i = 0;
         int line = _board[0].GetPosY();
@@ -86,10 +86,11 @@ public class BoardManager : MonoBehaviour {
             else {
                 aux.Add(_board[i]);
             }
+            i++;
         }
         foreach(Block b in aux) {
             DeleteTile(b);
-        }
+        }*/
     }
 
     internal void Earthqueake()

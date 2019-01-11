@@ -86,7 +86,7 @@ public class LevelManager : MonoBehaviour {
 
     internal void DeleteRow()
     {
-        throw new NotImplementedException();
+        boardManager.DeleteRow();
     }
 
     internal void Earthquake()
@@ -99,7 +99,6 @@ public class LevelManager : MonoBehaviour {
         if(State == LevelState.LAUNCHED) {
             float time = Time.frameCount;
             if(Mathf.Abs(Time.frameCount - framesTurno) > 350) {
-                Debug.Log("FAAAAST");
                 ChangeState(LevelState.FAST);
             }
         }
@@ -109,7 +108,10 @@ public class LevelManager : MonoBehaviour {
     /// <summary>
     /// Ball managing methods
     /// </summary>
-   
+    uint ballWait=0;
+    public void AddNewBall(uint num) {
+        ballWait+=num;
+    }
     public void PushBall(Ball b)
     {
         _balls.Add(b);
@@ -154,13 +156,11 @@ public class LevelManager : MonoBehaviour {
     public void OneBallLessInBallSink()
     {
         bSink.setNumBalls(bSink.getNumBalls() - 1);
-        Debug.Log("Sale Bola, quedan " + bSink.getNumBalls());
     }
 
     public void OneBallMoreInBallSink()
     {
         bSink.setNumBalls(bSink.getNumBalls() + 1);
-        Debug.Log("Llega Bola, quedan " + bSink.getNumBalls());
     }
 
 
@@ -188,6 +188,10 @@ public class LevelManager : MonoBehaviour {
 
     //Called from the death zone when the last ball arrives
     public void OnLastBallArrived() {
+        _numBalls += ballWait;
+        ballWait = 0;
+        bSink.setNumBalls(_numBalls);
+
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);
         bSpawn.gameObject.SetActive(true);
@@ -227,6 +231,8 @@ public class LevelManager : MonoBehaviour {
                 changeLevel = true;
                 break;
             case LevelState.DEAD:
+                UIManager.ResetStars();
+                RestartLevel();
                 break;
 
         }
