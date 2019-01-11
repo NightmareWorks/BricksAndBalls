@@ -60,5 +60,9 @@ public class Ball : MonoBehaviour {
         return rb.velocity.y < 0;
     }
 
+    public bool IsMovedByPhysics() {
+        return rb.velocity.y != 0;
+    }
+
     private Rigidbody2D rb;
 }

@@ -10,7 +10,8 @@ public class BallSink : MonoBehaviour {
     public TextMesh numballsText;//Text placed next to the fakeBall
 
     
-    private uint _numBalls;//Balls arrived
+    private uint _numBalls;//Balls actually in the sink
+    private uint _ballsArrived;//Balls that have arrived to the sink
     private Vector2 pos;//Position of the sink 2D
     private Vector2 size;//Size of the ball
 
@@ -36,6 +37,7 @@ public class BallSink : MonoBehaviour {
     {
         fakeBall.gameObject.transform.localScale = tam;
         size = fakeBall.gameObject.GetComponent<SpriteRenderer>().size/2;
+        _ballsArrived = LevelManager.instance.GetNumBalls();
     }
 
     //Gets the ball sink position
@@ -57,19 +59,24 @@ public class BallSink : MonoBehaviour {
     //Changes the text of the number of balls (called when every ball arrives)
     public void setNumBalls(uint n) {
         _numBalls = n; 
-        numballsText.text = "x" + _numBalls.ToString();
+    }
+
+    public void bSinkCeroBallsArrived() {
+        _ballsArrived = 0;
+        numballsText.text = "x" + _ballsArrived.ToString();
+    }
+
+    public void bSinkBallArrived() {
+        _ballsArrived++;
+        numballsText.text = "x" + _ballsArrived.ToString();
+        setNumBalls(_numBalls + 1);
+    }
+
+    public void allBallsArrived() {
+        _ballsArrived = LevelManager.instance.GetNumBalls();
+        numballsText.text = "x" + _ballsArrived.ToString();
     }
 
     //Gets the number of balls arrived
     public uint getNumBalls() { return _numBalls; }
-
-    // Use this for initialization
-    /*void Start () {
-		
-	}*/
-
-    // Update is called once per frame
-    /*void Update () {
-		
-	}*/
 }
