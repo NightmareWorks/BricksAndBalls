@@ -43,10 +43,13 @@ public class GameManager : MonoBehaviour
         //Inits ads
         _ads = GetComponent<Advertising>();
 
-        //Assigns the numbers for the power ups
-        powerUps[(uint)PowerUp.EARTHQUACKE] = 0;
-        _levels[0].playable = true;
-        _levels[0].star = 0;
+        if (!SaveManager.Instance.hasStateSaved)
+        {
+            //Assigns the numbers for the power ups
+            powerUps[(uint)PowerUp.EARTHQUACKE] = 0;
+            _levels[0].playable = true;
+            _levels[0].star = 0;
+        }
         if (MenuManager.instance != null)
         {
             MenuManager.instance.Init();
@@ -72,6 +75,7 @@ public class GameManager : MonoBehaviour
     //This is called from the menuManager to get 
     //all levels and init the buttons for them
     public Level[] GetLevels() {
+        int i = 0;
         return _levels;
     }
     public uint GetRubies()

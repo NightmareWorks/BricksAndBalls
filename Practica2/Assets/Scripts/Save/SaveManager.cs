@@ -7,12 +7,13 @@ public class SaveManager : MonoBehaviour
 {
     public SaveState state;
     public static SaveManager Instance { set; get; }
-
+    public bool hasStateSaved = false;
     private void Awake()
     {
+        //ResetSave();
         Instance = this;
         Load();
-        Debug.Log(Helper.Serialize<SaveState>(state));
+        Debug.Log(Helper.Deserialize<SaveState>(Helper.Decrypt(PlayerPrefs.GetString("save"))));
 
     }
     public void Save() {
@@ -21,13 +22,15 @@ public class SaveManager : MonoBehaviour
         state.PowerUps = GameManager.instance.GetPowerUp();
         state.maxLevel = GameManager.instance.GetMaxLevel();
 
-        PlayerPrefs.SetString("save", Helper.Serialize<SaveState>(state));
+        PlayerPrefs.SetString("save", Helper.Encrypt(Helper.Serialize<SaveState>(state)));
     }
 
     public void Load()
     {
         if (PlayerPrefs.HasKey("save")) {
-            state = Helper.Deserialize<SaveState>(PlayerPrefs.GetString("save"));
+            hasStateSaved = true;
+            state = Helper.Deserialize<SaveState>(Helper.Decrypt(PlayerPrefs.GetString("save")));
+
         }else {
             state = new SaveState();
             Save();
