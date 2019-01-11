@@ -23,7 +23,7 @@ public class DeathZone : MonoBehaviour {
     /// Changes the sink numballs (Called when a ball arrives)
     /// </summary>
     public void LlegaBola() {
-        _bSink.setNumBalls(_bSink.getNumBalls() + 1);
+        _bSink.bSinkBallArrived();
         //If all balls have arrived
         if (_bSink.getNumBalls() == LevelManager.instance.GetNumBalls())
         {
@@ -47,11 +47,11 @@ public class DeathZone : MonoBehaviour {
         //and it didn't collided while being launched
         if (thisBall.IsReturning())
         {
+            _bSink.show();
             if (firstOne)
             {
                 _bSink.setPosX(collision.gameObject.transform.position.x);
-                _bSink.setNumBalls(1);
-                _bSink.show();
+                _bSink.bSinkBallArrived();
                 Destroy(thisBall.gameObject);
                 firstOne = false;
             }
@@ -61,6 +61,12 @@ public class DeathZone : MonoBehaviour {
                 thisBall.MoveToPoint(_bSink.getPos(), 10, LlegaBola);
             }
         }
+
+        //If the ball is being moved by the button
+        /*else if (!thisBall.IsMovedByPhysics()) {
+            _bSink.show();
+            Debug.Log("!!!!!Me trae el boton!!!");
+        }*/
     }
 
     public bool firstOne = true;

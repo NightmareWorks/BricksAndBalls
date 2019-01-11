@@ -16,13 +16,19 @@ public class Ball : MonoBehaviour {
     public void enableCollision()
     {
         if (rb != null)
+        {
+            GetComponent<CircleCollider2D>().isTrigger = false;
             rb.WakeUp();
+        }
     }
 
     public void disableCollision()
     {
-        if(rb!= null)
+        if (rb != null)
+        {
             rb.Sleep();
+            GetComponent<CircleCollider2D>().isTrigger = true;
+        }
     }
 
     public void init(Vector3 tam) {
@@ -58,6 +64,10 @@ public class Ball : MonoBehaviour {
 
     public bool IsReturning() {
         return rb.velocity.y < 0;
+    }
+
+    public bool IsMovedByPhysics() {
+        return rb.velocity.y != 0;
     }
 
     private Rigidbody2D rb;

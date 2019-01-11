@@ -38,7 +38,10 @@ public class LevelManager : MonoBehaviour {
         foreach (Ball b in _balls)
         {
             if (b != null)
+            {
                 b.Stop();
+                b.disableCollision();
+            }
         }
     }
 
@@ -48,14 +51,24 @@ public class LevelManager : MonoBehaviour {
         {
             if (b != null)
             {
-                b.disableCollision();
-                b.MoveToPoint(bSink.getPos(), 30, b.enableCollision);
+                b.MoveToPoint(bSink.getPos(), 30, dZone.LlegaBola);
             }
         }
 
         //Reactiva el sink  y toda la gaita
-        //Y hay que avanzar un turno supongo
-        OnLastBallArrived();
+        //Y hay que avanzar un turno
+        //OnLastBallArrived();
+    }
+
+    public void OneBallLessInBallSink()
+    {
+        bSink.setNumBalls(bSink.getNumBalls() - 1);
+        Debug.Log("Sale Bola, quedan " + bSink.getNumBalls());
+    }
+
+    public void OneBallMoreInBallSink() {
+        bSink.setNumBalls(bSink.getNumBalls() + 1);
+        Debug.Log("Llega Bola, quedan " + bSink.getNumBalls());
     }
     //////////////////////////////////////
 
@@ -108,6 +121,7 @@ public class LevelManager : MonoBehaviour {
         bSpawn.setScale(tam);
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.init(tam);
+        bSink.allBallsArrived();//So the number in sink at the beggining is 50
         bSink.setPos(0, dZone.gameObject.transform.position.y);
         bSink.setNumBalls(_numBalls);
         bSink.show();
@@ -148,8 +162,9 @@ public class LevelManager : MonoBehaviour {
     {
         framesTurno = Time.frameCount;
         ChangeState(LevelState.LAUNCHED);
-        UIManager.ToggleBottomMenu();
+        UIManager.activateMenuOnThrow();
         bSpawn.spawnBalls(GetNumBalls(), direction);
+        bSink.bSinkCeroBallsArrived();
         HideBallSink();
     }
 
@@ -158,6 +173,8 @@ public class LevelManager : MonoBehaviour {
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);
         bSpawn.gameObject.SetActive(true);
+        bSink.allBallsArrived();
+        bSink.show();
         ActivateTouch();
 
         boardManager.StepForwardBlocks();
@@ -170,7 +187,7 @@ public class LevelManager : MonoBehaviour {
             DeactivateTouch();
         }
         ChangeState(LevelState.PLAY);
-        UIManager.ToggleBottomMenu();
+        UIManager.activateMenuWaiting();
     }
 
     public void ChangeState(LevelState state) {
@@ -210,14 +227,19 @@ public class LevelManager : MonoBehaviour {
         //Sets the ballSpawner and sink in the center again
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.setPos(0, dZone.gameObject.transform.position.y);
+
+
+        bSink.allBallsArrived();
+        UIManager.activateMenuWaiting();
         ActivateTouch();
+
     }
 
     public void RestartLevel() {
         //Needs to stop the ball spawner
         stars = 0;
         DestroyAllBalls();
-        bSink.setNumBalls(0);//Resets ballSink
+        bSink.setNumBalls(50);//Resets ballSink
         gameObject.SetActive(true);
 
         Level = GameManager.instance.GetLevelAct();
@@ -231,7 +253,9 @@ public class LevelManager : MonoBehaviour {
         //Sets the ballSpawner and sink in the center again
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.setPos(0, dZone.gameObject.transform.position.y);
+        bSink.allBallsArrived();
         bSink.show();
+        UIManager.activateMenuWaiting();
     }
 
     //Métodos que activan y desactivan el TOUCH
