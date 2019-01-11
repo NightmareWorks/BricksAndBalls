@@ -50,7 +50,6 @@ public class MenuManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
-        _lvFiller = GetComponent<LevelFiller>();
     }
 
     public void Init()
@@ -59,6 +58,7 @@ public class MenuManager : MonoBehaviour
         //Initializes the number of buttons and the levelFiller
         /*_levelButtons = new LevelButton[_Levels.Length];
         _lvCount = 0;*/
+        _lvFiller = GetComponent<LevelFiller>();
         _lvFiller.init(this, _Levels);
 
         //Fills the grid with buttons

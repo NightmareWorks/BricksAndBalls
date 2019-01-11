@@ -30,8 +30,6 @@ public class SaveManager : MonoBehaviour
             state = Helper.Deserialize<SaveState>(PlayerPrefs.GetString("save"));
         }else {
             state = new SaveState();
-            state.Levels[0].playable = true;
-            state.Levels[0].star = 0;
             Save();
             Debug.Log("No save filed found, creating a new one!");
         }

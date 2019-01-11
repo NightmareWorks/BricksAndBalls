@@ -17,10 +17,10 @@ public class GameManager : MonoBehaviour
     //Advertisement component
     private Advertising _ads;
 
-    private uint _maxLevel;
-    private uint _totalStars;
+    private uint _maxLevel = 0;
+    private uint _totalStars = 0;
     private uint levelAct=0;
-    private Level[] _levels; //Loads each level and the number of stars if -1 not activated
+    private Level[] _levels= new Level[100]; //Loads each level and the number of stars if -1 not activated
 
     private uint rubies;
     private uint[] powerUps = new uint[(uint)PowerUp.SIZE]; // 0 Earthquackes 1 ExtraBall
@@ -45,7 +45,9 @@ public class GameManager : MonoBehaviour
 
         //Assigns the numbers for the power ups
         powerUps[(uint)PowerUp.EARTHQUACKE] = 0;
-        if(MenuManager.instance != null)
+        _levels[0].playable = true;
+        _levels[0].star = 0;
+        if (MenuManager.instance != null)
             MenuManager.instance.Init();
     }
 
