@@ -40,4 +40,8 @@ public class UIManager : MonoBehaviour
     {
         _victoryPopUp.SetActive(false);
     }
+    public void ResetStars() {
+        LevelManager.instance.ResetPuntuacion();
+        StarsPuntuacion.ResetStar();
+    }
 }

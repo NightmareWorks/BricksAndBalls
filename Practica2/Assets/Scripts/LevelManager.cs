@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour {
     public TouchDetect tDetect;
     public UIManager UIManager;
 
+    public uint stars;
+
     //The level manager has a pointer to each ball
     //in case it has to call destroyAllBalls() or allBallsToSink()
     private List<Ball> _balls = new List<Ball>();
@@ -135,6 +137,11 @@ public class LevelManager : MonoBehaviour {
         PAcumulado += 10;
         UIManager.PuntuacionChanged(Puntuacion);
     }
+    public void ResetPuntuacion()
+    {
+        Puntuacion = 0;
+        UIManager.PuntuacionChanged(Puntuacion);
+    }
 
     //Nuevo turno
     public void LaunchBalls(Vector2 direction)
@@ -194,7 +201,7 @@ public class LevelManager : MonoBehaviour {
     public void NextLevel() {
         Level = GameManager.instance.GetLevelAct();
         boardManager.DestroyBoard();
-        boardManager.SetLevel(Level + 1);
+        boardManager.SetLevel(Level);
         ChangeState(LevelState.PLAY);
         changeLevel = false;
 
@@ -203,12 +210,12 @@ public class LevelManager : MonoBehaviour {
         //Sets the ballSpawner and sink in the center again
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.setPos(0, dZone.gameObject.transform.position.y);
-
+        ActivateTouch();
     }
 
     public void RestartLevel() {
         //Needs to stop the ball spawner
-
+        stars = 0;
         DestroyAllBalls();
         bSink.setNumBalls(0);//Resets ballSink
         gameObject.SetActive(true);
@@ -242,4 +249,6 @@ public class LevelManager : MonoBehaviour {
     public uint GetNumBalls() { return _numBalls; }
 
     public void HideBallSink() { bSink.hide(); }
+
+    public void AddStar() { stars++; }
 }

@@ -24,6 +24,7 @@ public class StarsUI : MonoBehaviour
     {
         slider_ = GetComponent<Slider>();
         ActivateStar(0);
+        LevelManager.instance.AddStar();
         stars[1].sprite = activateStar[0];
         stars[2].sprite = activateStar[0];
     }
@@ -34,9 +35,11 @@ public class StarsUI : MonoBehaviour
         slider_.value = puntuacion;
         if (!starsActive[1] && puntuacion > puntosEstrella[0] && puntuacion < puntosEstrella[1]) {
             ActivateStar(1);
+            LevelManager.instance.AddStar();
         }
         else if (!starsActive[2] && puntuacion >= puntosEstrella[1]) {
             ActivateStar(2);
+            LevelManager.instance.AddStar();
         }
     }
 
@@ -53,5 +56,14 @@ public class StarsUI : MonoBehaviour
         starsActive[star] = true;
         stars[star].sprite = activateStar[1];
         stars[star].gameObject.GetComponent<AudioSource>().Play();
+    }
+
+    public void ResetStar() {
+        slider_.value = 0;
+        ActivateStar(0);
+        starsActive[1] = false; starsActive[2] = false;
+        LevelManager.instance.AddStar();
+        stars[1].sprite = activateStar[0];
+        stars[2].sprite = activateStar[0];
     }
 }

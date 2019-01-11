@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     private uint _totalStars;
     private uint levelAct=0;
     private Level[] _levels; //Loads each level and the number of stars if -1 not activated
+
     private uint rubies;
     private uint[] powerUps = new uint[(uint)PowerUp.SIZE]; // 0 Earthquackes 1 ExtraBall
 
@@ -37,23 +39,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitFromSaved();
         //Inits ads
         _ads = GetComponent<Advertising>();
-
-        //Cargar niveles
-        _levels = new Level[100];
-        _levels[0].playable = true;
-        _levels[0].star = 0;
-
-        //Initializes the number of buttons and the levelFiller
-
-
-        //Pregunta si existe archivo de guardado
-
-        //Si lo hay, carga el estado de los niveles, los rubíes y los items
-
-        rubies = 400;
-        _totalStars = 0;
 
         //Assigns the numbers for the power ups
         powerUps[(uint)PowerUp.EARTHQUACKE] = 0;
@@ -61,8 +49,18 @@ public class GameManager : MonoBehaviour
             MenuManager.instance.Init();
     }
 
+    //This is called 
+    void InitFromSaved()
+    {
+        _levels = SaveManager.Instance.GetLevels();
+        _maxLevel = SaveManager.Instance.GetMaxLevel();
+        powerUps = SaveManager.Instance.GetPowerUp();
+        rubies = SaveManager.Instance.GetRubies();
+    }
+
     //Exits the app
     public void ExitApp() {
+        SaveManager.Instance.Save();
         Application.Quit();
     }
 
@@ -77,8 +75,12 @@ public class GameManager : MonoBehaviour
     }
     public void AddRubies(uint addrubi) {
         rubies += addrubi;
-        MenuManager.instance.UpdateRubys(rubies);
-        MenuManager.instance.UpdateRubys(rubies);
+        if (MenuManager.instance != null)
+        {
+            MenuManager.instance.UpdateRubys(rubies);
+            MenuManager.instance.UpdateRubys(rubies);
+        }
+        SaveManager.Instance.Save();
     }
     public uint GetNumPowerUp(PowerUp popUp)
     {
@@ -114,9 +116,13 @@ public class GameManager : MonoBehaviour
         return buy;
     }
     public void NextLevel() {
+        _levels[levelAct].star = LevelManager.instance.stars;
         levelAct++;
+        if (levelAct > _maxLevel) _maxLevel = levelAct;
+
         //ACTUALIZA EL NIVEL DESBLOQUEADO
         _levels[levelAct].playable = true;
+        SaveManager.Instance.Save();
         LevelManager.instance.NextLevel();
     }
     public void LoadLevel(uint _level, bool menu = false) {
@@ -127,5 +133,12 @@ public class GameManager : MonoBehaviour
     public uint GetLevelAct() {
         return levelAct;
     }
+
+    internal uint[] GetPowerUp()
+    {
+        return powerUps;
+    }
+    internal uint GetMaxLevel() { return _maxLevel; }
+
 
 }

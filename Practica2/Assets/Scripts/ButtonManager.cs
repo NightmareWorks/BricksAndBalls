@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// This component contains the callbacks of all the 
@@ -21,19 +22,21 @@ public class ButtonManager : MonoBehaviour
     }
 
     public void Restart() {
+        GetComponent<UIManager>().ResetStars();
         LevelManager.instance.RestartLevel();
         Play();
     }
 
     public void BackToMenu() {
+        SceneManager.LoadScene(0);
         Debug.Log("Vuelvo a cargar el menu");
     }
 
     public void GoToNextLevel() {
         Debug.Log("Al siguiente niv");
+        GetComponent<UIManager>().ResetStars();
         GetComponent<UIManager>().hideVictoryPopUp();
-        LevelManager.instance.NextLevel();
-        LevelManager.instance.ActivateTouch();
+        GameManager.instance.NextLevel();
     }
 
     public void BackToSink() {
