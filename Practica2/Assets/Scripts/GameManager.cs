@@ -16,13 +16,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     //Advertisement component
     private Advertising _ads;
-
+    public bool Activated = false;
     private uint _maxLevel = 0;
     private uint _totalStars = 0;
     private uint levelAct=0;
     private Level[] _levels= new Level[100]; //Loads each level and the number of stars if -1 not activated
 
-    private uint rubies;
+    private uint rubies = 100;
     private uint[] powerUps = new uint[(uint)PowerUp.SIZE]; // 0 Earthquackes 1 ExtraBall
 
     private void Awake()
@@ -48,7 +48,10 @@ public class GameManager : MonoBehaviour
         _levels[0].playable = true;
         _levels[0].star = 0;
         if (MenuManager.instance != null)
+        {
             MenuManager.instance.Init();
+            Activated = true;
+        }
     }
 
     //This is called 
@@ -114,6 +117,7 @@ public class GameManager : MonoBehaviour
             rubies -= price;
             powerUps[(int)powerUp]++;
             buy = true;
+            SaveManager.Instance.Save();
         }
         return buy;
     }

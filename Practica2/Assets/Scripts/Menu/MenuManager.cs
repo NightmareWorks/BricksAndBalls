@@ -49,35 +49,25 @@ public class MenuManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-
+    }
+    private void Start()
+    {
+        if (GameManager.instance.Activated)
+        {
+            Init();
+        }
     }
 
     public void Init()
     {
         _Levels = GameManager.instance.GetLevels();
         //Initializes the number of buttons and the levelFiller
-        /*_levelButtons = new LevelButton[_Levels.Length];
-        _lvCount = 0;*/
+
         _lvFiller = GetComponent<LevelFiller>();
         _lvFiller.init(this, _Levels);
 
         //Fills the grid with buttons
         _lvFiller.fill();
-
-        //Pregunta si existe archivo de guardado
-
-        //Si lo hay, carga el estado de los niveles, los rubíes y los items
-
-
-
-
-        //Si no lo hay, inicializa el nivel 1 con 0 estrellas, pone 400 rubíes y ningún item
-        /*_levelButtons[0].init(1, true);
-        for (uint i = 2; i <= _Levels.Length; i++)
-        {
-            _levelButtons[i - 1].init(i, false);
-        }*/
-
 
         //Assigns the numbers to respective texts
         _numRubys = GameManager.instance.GetRubies();

@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour {
     public TouchDetect tDetect;
     public UIManager UIManager;
 
-    public uint stars;
+    public uint stars = 0;
 
     //The level manager has a pointer to each ball
     //in case it has to call destroyAllBalls() or allBallsToSink()
@@ -216,6 +216,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void NextLevel() {
+        stars = 0;
         Level = GameManager.instance.GetLevelAct();
         boardManager.DestroyBoard();
         boardManager.SetLevel(Level);
@@ -274,5 +275,8 @@ public class LevelManager : MonoBehaviour {
 
     public void HideBallSink() { bSink.hide(); }
 
-    public void AddStar() { stars++; }
+    public void AddStar() {
+        stars++;
+        Debug.Log("Añado estrella " + stars);
+    }
 }

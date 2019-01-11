@@ -22,8 +22,8 @@ public class ButtonManager : MonoBehaviour
     }
 
     public void Restart() {
-        GetComponent<UIManager>().ResetStars();
         LevelManager.instance.RestartLevel();
+        GetComponent<UIManager>().ResetStars();
         Play();
     }
 
@@ -34,9 +34,9 @@ public class ButtonManager : MonoBehaviour
 
     public void GoToNextLevel() {
         Debug.Log("Al siguiente niv");
-        GetComponent<UIManager>().ResetStars();
         GetComponent<UIManager>().hideVictoryPopUp();
         GameManager.instance.NextLevel();
+        GetComponent<UIManager>().ResetStars();
     }
 
     public void BackToSink() {
