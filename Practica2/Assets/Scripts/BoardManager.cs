@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class BoardManager : MonoBehaviour {
     //Matriz de bloques
@@ -71,6 +72,35 @@ public class BoardManager : MonoBehaviour {
         }
    
     }
+
+    internal void DeleteRow()
+    {
+        List<Block> aux = new List<Block>();
+        bool changeLine = false;
+        int i = 0;
+        int line = _board[0].GetPosY();
+        while (!changeLine) {
+            if(line != _board[i].GetPosY()) {
+                changeLine = true;
+            }
+            else {
+                aux.Add(_board[i]);
+            }
+        }
+        foreach(Block b in aux) {
+            DeleteTile(b);
+        }
+    }
+
+    internal void Earthqueake()
+    {
+        foreach (Block b in _board)
+        {
+            //if(b!=null)
+            b.SubstractLife(GameManager.instance.r.Next(b.GetLife()));
+        }
+    }
+
     public void DestroyBoard()
     {
         foreach(Block b in _board) {

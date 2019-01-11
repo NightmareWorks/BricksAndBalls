@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,58 +19,6 @@ public class LevelManager : MonoBehaviour {
     //in case it has to call destroyAllBalls() or allBallsToSink()
     private List<Ball> _balls = new List<Ball>();
 
-    public void PushBall(Ball b) {
-        _balls.Add(b);
-    }
-
-    public void DestroyAllBalls() {
-        //Hay que parar la corrutina para que no sigan saliendo más bolas
-        bSpawn.StopSpawningBalls();
-        foreach (Ball b in _balls)
-        {
-            if(b != null)
-                Destroy(b.gameObject);
-        }
-    }
-
-    public void StopAllBalls() {
-        //Stops the launching routine
-        bSpawn.StopSpawningBalls();
-        foreach (Ball b in _balls)
-        {
-            if (b != null)
-            {
-                b.Stop();
-                b.disableCollision();
-            }
-        }
-    }
-
-    public void AllBallsToSink()
-    {
-        foreach (Ball b in _balls)
-        {
-            if (b != null)
-            {
-                b.MoveToPoint(bSink.getPos(), 30, dZone.LlegaBola);
-            }
-        }
-
-        //Reactiva el sink  y toda la gaita
-        //Y hay que avanzar un turno
-        //OnLastBallArrived();
-    }
-
-    public void OneBallLessInBallSink()
-    {
-        bSink.setNumBalls(bSink.getNumBalls() - 1);
-        Debug.Log("Sale Bola, quedan " + bSink.getNumBalls());
-    }
-
-    public void OneBallMoreInBallSink() {
-        bSink.setNumBalls(bSink.getNumBalls() + 1);
-        Debug.Log("Llega Bola, quedan " + bSink.getNumBalls());
-    }
     //////////////////////////////////////
 
 
@@ -135,6 +84,16 @@ public class LevelManager : MonoBehaviour {
         UIManager.InitPuntuacion(maxPuntuacion);
 	}
 
+    internal void DeleteRow()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void Earthquake()
+    {
+        boardManager.Earthqueake();
+    }
+
     private void Update()
     {
         if(State == LevelState.LAUNCHED) {
@@ -145,6 +104,65 @@ public class LevelManager : MonoBehaviour {
             }
         }
     }
+
+
+    /// <summary>
+    /// Ball managing methods
+    /// </summary>
+   
+    public void PushBall(Ball b)
+    {
+        _balls.Add(b);
+    }
+
+    public void DestroyAllBalls()
+    {
+        //Hay que parar la corrutina para que no sigan saliendo más bolas
+        bSpawn.StopSpawningBalls();
+        foreach (Ball b in _balls)
+        {
+            if (b != null)
+                Destroy(b.gameObject);
+        }
+    }
+
+    public void StopAllBalls()
+    {
+        //Stops the launching routine
+        bSpawn.StopSpawningBalls();
+        foreach (Ball b in _balls)
+        {
+            if (b != null)
+            {
+                b.Stop();
+                b.disableCollision();
+            }
+        }
+    }
+
+    public void AllBallsToSink()
+    {
+        foreach (Ball b in _balls)
+        {
+            if (b != null)
+            {
+                b.MoveToPoint(bSink.getPos(), 30, dZone.LlegaBola);
+            }
+        }
+    }
+
+    public void OneBallLessInBallSink()
+    {
+        bSink.setNumBalls(bSink.getNumBalls() - 1);
+        Debug.Log("Sale Bola, quedan " + bSink.getNumBalls());
+    }
+
+    public void OneBallMoreInBallSink()
+    {
+        bSink.setNumBalls(bSink.getNumBalls() + 1);
+        Debug.Log("Llega Bola, quedan " + bSink.getNumBalls());
+    }
+
 
     public void IncrementPoints() {
         Puntuacion += PAcumulado;
@@ -157,7 +175,7 @@ public class LevelManager : MonoBehaviour {
         UIManager.PuntuacionChanged(Puntuacion);
     }
 
-    //Nuevo turno
+    //New turn
     public void LaunchBalls(Vector2 direction)
     {
         framesTurno = Time.frameCount;
@@ -181,8 +199,7 @@ public class LevelManager : MonoBehaviour {
         PAcumulado = 10;
         if (changeLevel)
         {
-            //Save the game////////////////////////////////////
-
+            SaveManager.Instance.Save();
             UIManager.VictoryPopUp();
             DeactivateTouch();
         }

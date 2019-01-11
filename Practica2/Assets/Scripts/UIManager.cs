@@ -7,11 +7,24 @@ public class UIManager : MonoBehaviour
     public RectTransform[] menuBottom= new RectTransform[2];
     public RectTransform menuPausa;
     public StarsUI StarsPuntuacion;
+    public Button[] Powerupbuttons;
 
     //Window to next level or menu
     [SerializeField]
     private GameObject _victoryPopUp;
-
+    private void Start()
+    {
+        UpdatePowerUpButtons();
+    }
+    public void UpdatePowerUpButtons() {
+        uint[] PowerUp= GameManager.instance.GetPowerUp();
+        for(int i = 0; i < PowerUp.Length; i++) {
+            if (PowerUp[i] <= 0)
+                Powerupbuttons[i].interactable = false;
+            else
+                Powerupbuttons[i].interactable = true;
+        }
+    }
     public void activateMenuOnThrow() {
         menuBottom[0].gameObject.SetActive(false);
         menuBottom[1].gameObject.SetActive(true);

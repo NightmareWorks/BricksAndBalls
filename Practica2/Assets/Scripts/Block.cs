@@ -47,6 +47,14 @@ public class Block : MonoBehaviour {
                 break;
         }
     }
+    public void SubstractLife(int life) {
+        audioSource.Play();
+        _life -= life;
+        txt.text = _life.ToString();
+    }
+    public int GetLife() {
+        return _life;
+     }
     public void SetLife(int life)
     {
         _life = life;

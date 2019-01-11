@@ -43,4 +43,15 @@ public class ButtonManager : MonoBehaviour
         LevelManager.instance.StopAllBalls();
         LevelManager.instance.AllBallsToSink();
     }
+
+    public void UseEarthquacke() {
+        GameManager.instance.UsePowerUp(PowerUp.EARTHQUACKE);
+        GetComponent<UIManager>().UpdatePowerUpButtons();
+    }
+
+    public void UseDeleteRow()
+    {
+        GameManager.instance.UsePowerUp(PowerUp.DELETE);
+        GetComponent<UIManager>().UpdatePowerUpButtons();
+    }
 }

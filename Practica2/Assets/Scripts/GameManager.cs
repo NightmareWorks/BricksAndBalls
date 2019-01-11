@@ -24,9 +24,12 @@ public class GameManager : MonoBehaviour
 
     private uint rubies = 100;
     private uint[] powerUps = new uint[(uint)PowerUp.SIZE]; // 0 Earthquackes 1 ExtraBall
+    public System.Random r;
+
 
     private void Awake()
     {
+        r = new System.Random();
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         InitFromSaved();
         //Inits ads
         _ads = GetComponent<Advertising>();
@@ -54,6 +58,20 @@ public class GameManager : MonoBehaviour
         {
             MenuManager.instance.Init();
             Activated = true;
+        }
+
+    }
+
+    internal void UsePowerUp(PowerUp powerUp)
+    {
+        if(powerUps[(int)powerUp] >= 1) {
+            switch (powerUp) {
+                case PowerUp.EARTHQUACKE:
+                    LevelManager.instance.Earthquake();
+                    break;
+            
+            }
+            powerUps[(int)powerUp]--;
         }
     }
 
