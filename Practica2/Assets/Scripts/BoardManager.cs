@@ -47,9 +47,9 @@ public class BoardManager : MonoBehaviour {
         return true;
     }
 
-    public void SetLevel(int Level)
+    public void SetLevel(uint Level)
     {
-        _board = GetComponent<ReadMap>().loadMap(Level);
+        _board = GetComponent<ReadMap>().loadMap(Level+1);
 
         tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 18);
         MarginX = (Screen.width - tamX * 11) / 2;

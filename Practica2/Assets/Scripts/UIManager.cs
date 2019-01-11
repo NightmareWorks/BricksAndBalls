@@ -12,16 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _victoryPopUp;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void ToggleBottomMenu()
     {
         menuBottom[0].gameObject.SetActive(!menuBottom[0].gameObject.activeSelf);
@@ -30,6 +21,7 @@ public class UIManager : MonoBehaviour
     public void InitPuntuacion(int maxPuntuacion) {
         StarsPuntuacion.Init(maxPuntuacion);
     }
+
     public void PuntuacionChanged(float Puntuacion) {
         StarsPuntuacion.OnValueChanged(Puntuacion);
     }

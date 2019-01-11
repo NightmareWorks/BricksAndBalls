@@ -18,8 +18,7 @@ public class LevelManager : MonoBehaviour {
 
     private LevelState State = LevelState.PLAY;
 
-    [Range(1,312)]
-    public int Level = 1;
+    private uint Level = 1;
     private int Puntuacion = 0;
     private int PAcumulado = 10;
     private int maxPuntuacion;
@@ -34,8 +33,6 @@ public class LevelManager : MonoBehaviour {
         else if (instance != this)
             Destroy(gameObject);
 
-        //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
         bSink = GetComponent<BallSink>();
         boardManager = GetComponent<BoardManager>();
         bSpawn = GetComponent<BallSpawner>();
@@ -45,6 +42,7 @@ public class LevelManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Level = GameManager.instance.GetLevelAct();
         ChangeState(LevelState.PLAY);
         //Carga el txt del nivel seleccionado
         boardManager.SetLevel(Level);
@@ -143,11 +141,13 @@ public class LevelManager : MonoBehaviour {
         }
     }
     public void NextLevel() {
-        Level++;
+        Level = GameManager.instance.GetLevelAct();
         boardManager.DestroyBoard();
         boardManager.SetLevel(Level);
         ChangeState(LevelState.PLAY);
         changeLevel = false;
+
+        _numBalls = 50;
         //Sets the ballSpawner and sink in the center again
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.setPos(0, dZone.gameObject.transform.position.y);

@@ -15,7 +15,7 @@ public class ReadMap : MonoBehaviour
     private Transform parent;
 
     public int y;
-    public List<Block> loadMap(int level) {
+    public List<Block> loadMap(uint level) {
         parent = new GameObject("Blocks").transform;
 
         List<Block> _blocks = new List<Block>();

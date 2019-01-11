@@ -51,7 +51,7 @@ public class LevelButton : MonoBehaviour
     public void goToLevel() {
         //Llama al metodo del menu manager para ir al nivel suyo
         if (_playable)
-            Debug.Log("Voy al nivel " + _level);
+            GameManager.instance.LoadLevel(_level, true);
         else
             Debug.Log("Locked");
     }

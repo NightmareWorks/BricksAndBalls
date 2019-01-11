@@ -8,16 +8,17 @@ public class LevelFiller : MonoBehaviour
     [SerializeField]
     private LevelButton _levelPrefab;
 
-    private uint _numLevels;
-    private GameManager _menuManager;
+    private Level[] _Levels;
+    private MenuManager _menuManager;
+    public Transform parent;
 
     //Inits this component with the manager
     //It's needed to push the created buttons into the
     //manager list
-    public void init(GameManager mMgr, uint numLevels )
+    public void init(MenuManager mMgr, Level[] Levels )
     {
         _menuManager = mMgr;
-        _numLevels = numLevels;
+        _Levels = Levels;
 
     }
 
@@ -27,8 +28,9 @@ public class LevelFiller : MonoBehaviour
     /// </summary>    
     public void fill() {
         LevelButton newButton;
-        for (int i = 0; i < _numLevels; i++) {
-            newButton = (LevelButton)Instantiate(_levelPrefab, transform);
+        for (uint i = 0; i < _Levels.Length; i++) {
+            newButton = (LevelButton)Instantiate(_levelPrefab, parent);
+            newButton.init(i, _Levels[i].playable, _Levels[i].star);
             _menuManager.pushButton(newButton);
         }
 
