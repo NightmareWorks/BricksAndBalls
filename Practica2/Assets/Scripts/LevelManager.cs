@@ -12,6 +12,28 @@ public class LevelManager : MonoBehaviour {
     public TouchDetect tDetect;
     public UIManager UIManager;
 
+    //The level manager has a pointer to each ball
+    //in case it has to call destroyAllBalls() or allBallsToSink()
+    private List<Ball> _balls = new List<Ball>();
+
+    public void PushBall(Ball b) {
+        _balls.Add(b);
+    }
+
+    public void DestroyAllBalls() {
+        //Hay que parar la corrutina para que no sigan saliendo más bolas
+
+        foreach (Ball b in _balls)
+        {
+            if(b != null)
+                Destroy(b.gameObject);
+        }
+    }
+
+    
+    //////////////////////////////////////
+    
+
     public bool changeLevel = false;
 
     private BoardManager boardManager;
@@ -25,7 +47,9 @@ public class LevelManager : MonoBehaviour {
 
     private int framesTurno = 0;
     
+    //Total balls 
     private uint _numBalls;
+
     private void Awake()
     {
         if (instance == null)
@@ -98,7 +122,7 @@ public class LevelManager : MonoBehaviour {
         HideBallSink();
     }
 
-    //Fin del turno
+    //Called from the death zone when the last ball arrives
     public void OnLastBallArrived() {
         Vector2 pos = bSink.getPos();
         bSpawn.setLaunchPos(pos.x, pos.y);
@@ -109,6 +133,8 @@ public class LevelManager : MonoBehaviour {
         PAcumulado = 10;
         if (changeLevel)
         {
+            //Save the game////////////////////////////////////
+
             UIManager.VictoryPopUp();
             DeactivateTouch();
         }
@@ -140,7 +166,30 @@ public class LevelManager : MonoBehaviour {
 
         }
     }
+
     public void NextLevel() {
+        Level = GameManager.instance.GetLevelAct();
+        boardManager.DestroyBoard();
+        boardManager.SetLevel(Level + 1);
+        ChangeState(LevelState.PLAY);
+        changeLevel = false;
+
+        _numBalls = 50;
+
+        //Sets the ballSpawner and sink in the center again
+        bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
+        bSink.setPos(0, dZone.gameObject.transform.position.y);
+
+    }
+
+    public void RestartLevel() {
+        //Needs to stop the ball spawner
+        bSpawn.StopSpawningBalls();
+
+        DestroyAllBalls();
+        bSink.setNumBalls(0);//Resets ballSink
+        gameObject.SetActive(true);
+
         Level = GameManager.instance.GetLevelAct();
         boardManager.DestroyBoard();
         boardManager.SetLevel(Level);
@@ -148,11 +197,13 @@ public class LevelManager : MonoBehaviour {
         changeLevel = false;
 
         _numBalls = 50;
+
         //Sets the ballSpawner and sink in the center again
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.setPos(0, dZone.gameObject.transform.position.y);
-
+        bSink.show();
     }
+
     //Métodos que activan y desactivan el TOUCH
     public void ActivateTouch() {
         tDetect.gameObject.SetActive(true);

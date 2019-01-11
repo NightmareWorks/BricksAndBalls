@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
 {
-    //Initializes the button for choosing the lvl
+    /// <summary>
+    /// Initializes the button with it's level number,
+    /// the number of stars and if it's playable already
+    /// </summary>
     public void init(uint level, bool playable, uint numStars = 0)
     {
         _level = level;
@@ -48,10 +51,10 @@ public class LevelButton : MonoBehaviour
 
     public uint getLevel() { return _level; }
 
+    //Calls the gameManager method to go to his level
     public void goToLevel() {
-        //Llama al metodo del menu manager para ir al nivel suyo
         if (_playable)
-            GameManager.instance.LoadLevel(_level, true);
+            GameManager.instance.LoadLevel(_level - 1, true);
         else
             Debug.Log("Locked");
     }

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class LevelFiller : MonoBehaviour
 {
-
+    //The level button prefab
     [SerializeField]
     private LevelButton _levelPrefab;
 
     private Level[] _Levels;
     private MenuManager _menuManager;
+
+    //Needs the parent to set every button position
     public Transform parent;
 
     //Inits this component with the manager
@@ -19,7 +21,6 @@ public class LevelFiller : MonoBehaviour
     {
         _menuManager = mMgr;
         _Levels = Levels;
-
     }
 
     /// <summary>
@@ -30,8 +31,8 @@ public class LevelFiller : MonoBehaviour
         LevelButton newButton;
         for (uint i = 0; i < _Levels.Length; i++) {
             newButton = (LevelButton)Instantiate(_levelPrefab, parent);
-            newButton.init(i, _Levels[i].playable, _Levels[i].star);
-            _menuManager.pushButton(newButton);
+            newButton.init(i + 1, _Levels[i].playable, _Levels[i].star);
+            //_menuManager.pushButton(newButton);
         }
 
     }

@@ -53,6 +53,7 @@ public class BallSpawner : MonoBehaviour {
         for (int i = 0; i < numBalls; i++)
         {
             Ball actB = Instantiate(ball,parent);
+            LevelManager.instance.PushBall(actB);
             actB.init(tam);
             actB.startMove(new Vector2(posX,posY),speed * direction);
             yield return new WaitForFixedUpdate();
@@ -60,6 +61,10 @@ public class BallSpawner : MonoBehaviour {
             yield return new WaitForFixedUpdate();
         }
         gameObject.SetActive(false);
+    }
+
+    public void StopSpawningBalls() {
+        StopAllCoroutines();
     }
 
     private float posX, posY;

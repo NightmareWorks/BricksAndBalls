@@ -28,6 +28,7 @@ public class BallSink : MonoBehaviour {
     {
         fakeBall.SetActive(true);
     }
+
     /// <summary>
     /// Called when the balls start to be launch
     /// </summary>

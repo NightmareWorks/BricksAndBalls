@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager instance;
+
     //Component that fills the canvas with the level buttons
     private LevelFiller _lvFiller;
     [SerializeField]
@@ -20,7 +21,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private GameObject _cantBuyPop;
 
-    //Power ups ingame that cam be purchased at the shop
+    //Power ups ingame that can be purchased at the shop
     [SerializeField]
     private Text _numEQ;
     private uint _numEarthQuakes;
@@ -37,9 +38,10 @@ public class MenuManager : MonoBehaviour
     private Text _starsTxt;
     private uint _totalStars;
 
+    /*
     //Attributes used to create the level buttons
     private LevelButton[] _levelButtons;
-    private uint _lvCount;
+    private uint _lvCount;*/
 
     private void Awake()
     {
@@ -50,12 +52,13 @@ public class MenuManager : MonoBehaviour
 
         _lvFiller = GetComponent<LevelFiller>();
     }
+
     public void Init()
     {
         _Levels = GameManager.instance.GetLevels();
         //Initializes the number of buttons and the levelFiller
-        _levelButtons = new LevelButton[_Levels.Length];
-        _lvCount = 0;
+        /*_levelButtons = new LevelButton[_Levels.Length];
+        _lvCount = 0;*/
         _lvFiller.init(this, _Levels);
 
         //Fills the grid with buttons
@@ -88,11 +91,11 @@ public class MenuManager : MonoBehaviour
     }
 
     //Introduces a button into the array (called in the filler)
-    public void pushButton(LevelButton btn)
+    /*public void pushButton(LevelButton btn)
     {
         _levelButtons[_lvCount] = btn;
         ++_lvCount;
-    }
+    }*/
 
     ////Callbacks for the exit button////
     public void showExitPopUp()
@@ -107,7 +110,6 @@ public class MenuManager : MonoBehaviour
 
     public void exitApp()
     {
-        //Guarda las cosas y sale
         Application.Quit();
     }
     //////////////////////////////////////
@@ -144,6 +146,7 @@ public class MenuManager : MonoBehaviour
         }
     }
     //////////////////////////////////////
+    
     ////Callbacks for the ad button////
     public void AdButtonCallback()
     {

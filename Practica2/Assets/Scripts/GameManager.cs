@@ -61,14 +61,16 @@ public class GameManager : MonoBehaviour
             MenuManager.instance.Init();
     }
 
-
+    //Exits the app
     public void ExitApp() {
-        //Guarda las cosas y sale
         Application.Quit();
     }
+
+    //This is called from the menuManager to get 
+    //all levels and init the buttons for them
     public Level[] GetLevels() {
         return _levels;
-     }
+    }
     public uint GetRubies()
     {
         return rubies;

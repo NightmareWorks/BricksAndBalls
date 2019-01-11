@@ -2,18 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This component contains the callbacks of all the 
+/// gameScene buttons
+/// </summary>
 public class ButtonManager : MonoBehaviour
 {
-    //Botones
     public void Pause()
     {
         GetComponent<UIManager>().TogglePausaMenu();
         LevelManager.instance.ChangeState(LevelState.PAUSE);
     }
+
     public void Play() {
         GetComponent<UIManager>().TogglePausaMenu();
         LevelManager.instance.ChangeState(LevelState.PLAY);
         LevelManager.instance.ActivateTouch();
+    }
+
+    public void Restart() {
+        LevelManager.instance.RestartLevel();
+        Play();
     }
 
     public void BackToMenu() {
