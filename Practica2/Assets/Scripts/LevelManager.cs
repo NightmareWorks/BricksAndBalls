@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour {
 
     public void DestroyAllBalls() {
         //Hay que parar la corrutina para que no sigan saliendo más bolas
-
+        bSpawn.StopSpawningBalls();
         foreach (Ball b in _balls)
         {
             if(b != null)
@@ -30,9 +30,33 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    
+    public void StopAllBalls() {
+        //Stops the launching routine
+        bSpawn.StopSpawningBalls();
+        foreach (Ball b in _balls)
+        {
+            if (b != null)
+                b.Stop();
+        }
+    }
+
+    public void AllBallsToSink()
+    {
+        foreach (Ball b in _balls)
+        {
+            if (b != null)
+            {
+                b.disableCollision();
+                b.MoveToPoint(bSink.getPos(), 30, b.enableCollision);
+            }
+        }
+
+        //Reactiva el sink  y toda la gaita
+        //Y hay que avanzar un turno supongo
+        OnLastBallArrived();
+    }
     //////////////////////////////////////
-    
+
 
     public bool changeLevel = false;
 
@@ -184,7 +208,6 @@ public class LevelManager : MonoBehaviour {
 
     public void RestartLevel() {
         //Needs to stop the ball spawner
-        bSpawn.StopSpawningBalls();
 
         DestroyAllBalls();
         bSink.setNumBalls(0);//Resets ballSink

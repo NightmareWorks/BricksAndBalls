@@ -13,6 +13,18 @@ public class Ball : MonoBehaviour {
     /*void Update () {
 		
 	}*/
+    public void enableCollision()
+    {
+        if (rb != null)
+            rb.WakeUp();
+    }
+
+    public void disableCollision()
+    {
+        if(rb!= null)
+            rb.Sleep();
+    }
+
     public void init(Vector3 tam) {
         rb = GetComponent<Rigidbody2D>();
         gameObject.transform.localScale = tam;

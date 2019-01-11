@@ -35,4 +35,9 @@ public class ButtonManager : MonoBehaviour
         LevelManager.instance.NextLevel();
         LevelManager.instance.ActivateTouch();
     }
+
+    public void BackToSink() {
+        LevelManager.instance.StopAllBalls();
+        LevelManager.instance.AllBallsToSink();
+    }
 }
