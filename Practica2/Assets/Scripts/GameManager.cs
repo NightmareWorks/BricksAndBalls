@@ -113,17 +113,20 @@ public class GameManager : MonoBehaviour
         }
         return buy;
     }
+
     public void NextLevel() {
         levelAct++;
         //ACTUALIZA EL NIVEL DESBLOQUEADO
         _levels[levelAct].playable = true;
         LevelManager.instance.NextLevel();
     }
+
     public void LoadLevel(uint _level, bool menu = false) {
         levelAct = _level;
         if(menu)
             SceneManager.LoadScene(1);
     }
+
     public uint GetLevelAct() {
         return levelAct;
     }
