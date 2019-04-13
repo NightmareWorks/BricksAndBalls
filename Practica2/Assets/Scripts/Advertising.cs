@@ -34,7 +34,7 @@ public class Advertising : MonoBehaviour {
     /// </summary>
     public void ShowRewardedAd()
     {
-        const string RewardedPlacementId = "advertisementtest";
+        const string RewardedPlacementId = "GainRubies_VIDEO";
 
 //#if UNITY_ADS
         if (!Advertisement.IsReady(RewardedPlacementId))
