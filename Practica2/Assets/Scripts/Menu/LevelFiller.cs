@@ -26,14 +26,18 @@ public class LevelFiller : MonoBehaviour
     /// <summary>
     /// Creates and pushes the level buttons into the grid and
     /// the manager list to initialize them later
+    /// It returns the max number of stars
     /// </summary>    
-    public void fill() {
+    public uint Fill() {
+        uint maxStars=0;
         LevelButton newButton;
         for (uint i = 0; i < _Levels.Length; i++) {
             newButton = (LevelButton)Instantiate(_levelPrefab, parent);
             newButton.init(i + 1, _Levels[i].playable, _Levels[i].star);
+            if (_Levels[i].playable)
+                maxStars += _Levels[i].star;
             //_menuManager.pushButton(newButton);
         }
-
+        return maxStars;
     }
 }

@@ -72,7 +72,7 @@ public class MenuManager : MonoBehaviour
         _lvFiller.init(this, _Levels);
 
         //Fills the grid with buttons
-        _lvFiller.fill();
+        _totalStars = _lvFiller.Fill();
 
         //Assigns the numbers to respective texts
         _numRubys = GameManager.instance.GetRubies();
