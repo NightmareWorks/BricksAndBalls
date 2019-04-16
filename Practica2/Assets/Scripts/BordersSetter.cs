@@ -16,7 +16,7 @@ public class BordersSetter : MonoBehaviour {
     float tamX, MarginY,MarginX;
 	// Use this for initialization
 	void Awake () {
-        tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 18);
+       /* tamX = Mathf.Min(((float)Screen.width) / 11, ((float)Screen.height) / 18);
         MarginX = (Screen.width - tamX * 11) / 2;
         MarginY = (Screen.height - tamX * 14) / 2;
 
@@ -54,7 +54,7 @@ public class BordersSetter : MonoBehaviour {
         panel[0].localScale = new Vector3(scale, scale, 1);
         scale = Mathf.Min(bordesPantalla[1].sizeDelta.x / panel[1].sizeDelta.x, (MarginY) / panel[1].sizeDelta.y);
         panel[1].localScale = new Vector3(scale, scale, 1);
-        panel[2].localScale = new Vector3(scale, scale, 1);
+        panel[2].localScale = new Vector3(scale, scale, 1);*/
 
     }
 }
