@@ -68,16 +68,16 @@ public class LevelManager : MonoBehaviour {
 
     //        Vector3 tam = boardManager.GetTam();
         //       bSpawn.setScale(tam);
-        bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
-        bSink.init(tam);
+        bSpawn.setLaunchPos(0, -6.5f);
+        bSink.Init();
         bSink.allBallsArrived();//So the number in sink at the beggining is 50
-        bSink.setPos(0, dZone.gameObject.transform.position.y);
+        bSink.setPos(0, -6.5f);
         bSink.setNumBalls(_numBalls);
         bSink.show();
         ///Hay que añadir una estrella a la puntuación 
 
         // 2.Se activa el detector de pulsación
-        tDetect.Init(bSpawn, tam.x*7);
+        tDetect.Init(bSpawn, 0.5f*7);
 
         //Ponemos la máxima puntuación en función del número de bloques
         maxPuntuacion = boardManager.numTiles() * 35;

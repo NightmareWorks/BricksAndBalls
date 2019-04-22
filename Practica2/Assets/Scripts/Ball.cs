@@ -31,9 +31,8 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    public void init(Vector3 tam) {
+    public void init() {
         rb = GetComponent<Rigidbody2D>();
-        gameObject.transform.localScale = tam;
     }
 
     public void startMove(Vector2 posIni, Vector2 speed) {

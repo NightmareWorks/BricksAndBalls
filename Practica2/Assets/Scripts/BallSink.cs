@@ -33,9 +33,8 @@ public class BallSink : MonoBehaviour {
     /// <summary>
     /// Called when the balls start to be launch
     /// </summary>
-    public void init(Vector3 tam)
+    public void Init()
     {
-        fakeBall.gameObject.transform.localScale = tam;
         size = fakeBall.gameObject.GetComponent<SpriteRenderer>().size/2;
         _ballsArrived = LevelManager.instance.GetNumBalls();
     }

@@ -54,7 +54,7 @@ public class BallSpawner : MonoBehaviour {
         {
             Ball actB = Instantiate(ball,parent);
             LevelManager.instance.PushBall(actB);
-            actB.init(tam);
+            actB.init();
             actB.startMove(new Vector2(posX,posY),speed * direction);
             LevelManager.instance.OneBallLessInBallSink();
             yield return new WaitForFixedUpdate();
