@@ -66,8 +66,8 @@ public class LevelManager : MonoBehaviour {
         //Game Manager
         _numBalls = 50;
 
-        Vector3 tam = boardManager.GetTam();
-        bSpawn.setScale(tam);
+    //        Vector3 tam = boardManager.GetTam();
+        //       bSpawn.setScale(tam);
         bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
         bSink.init(tam);
         bSink.allBallsArrived();//So the number in sink at the beggining is 50
