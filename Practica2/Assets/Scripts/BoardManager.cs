@@ -63,10 +63,11 @@ public class BoardManager : MonoBehaviour {
 
         //Posicion 0,0 del tablero
         posIni = new Vector3(tamJuego.x - tamScale.x / 2, -tamJuego.y + (3 * tamScale.y) / 2, 10);
+        Debug.Log(tamScale);
 
         foreach (Block b in _board)
         {
-            b.gameObject.transform.localScale = tamScale;
+            //b.gameObject.transform.localScale = tamScale;
             b.gameObject.transform.position = new Vector3(-posIni.x + tamScale.x * b.GetPosX(), posIni.y + tamScale.y * b.GetPosY(), 10);
         }
    
