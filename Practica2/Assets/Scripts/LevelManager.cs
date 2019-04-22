@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour {
     public Advertising adv;
     public TouchDetect tDetect;
     public UIManager UIManager;
+    private Vector3 PosIni = new Vector3(0,-6.5f,0);
 
     public uint stars = 0;
 
@@ -65,17 +66,10 @@ public class LevelManager : MonoBehaviour {
 
         //Game Manager
         _numBalls = 50;
+        ResetBallAndSinkPos();
 
-    //        Vector3 tam = boardManager.GetTam();
-        //       bSpawn.setScale(tam);
-        bSpawn.setLaunchPos(0, -6.5f);
         bSink.Init();
-        bSink.allBallsArrived();//So the number in sink at the beggining is 50
-        bSink.setPos(0, -6.5f);
-        bSink.setNumBalls(_numBalls);
-        bSink.show();
-        ///Hay que añadir una estrella a la puntuación 
-
+        
         // 2.Se activa el detector de pulsación
         tDetect.Init(bSpawn, 0.5f*7);
 
@@ -249,9 +243,7 @@ public class LevelManager : MonoBehaviour {
         _numBalls = 50;
 
         //Sets the ballSpawner and sink in the center again
-        bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
-        bSink.setPos(0, dZone.gameObject.transform.position.y);
-
+        ResetBallAndSinkPos();
 
         bSink.allBallsArrived();
         UIManager.activateMenuWaiting();
@@ -275,8 +267,7 @@ public class LevelManager : MonoBehaviour {
         _numBalls = 50;
 
         //Sets the ballSpawner and sink in the center again
-        bSpawn.setLaunchPos(0, dZone.gameObject.transform.position.y);
-        bSink.setPos(0, dZone.gameObject.transform.position.y);
+        ResetBallAndSinkPos();
         bSink.allBallsArrived();
         bSink.show();
         UIManager.activateMenuWaiting();
@@ -302,4 +293,10 @@ public class LevelManager : MonoBehaviour {
         stars++;
         Debug.Log("Añado estrella " + stars);
     }
+    private void ResetBallAndSinkPos()
+    {
+        bSpawn.setLaunchPos(PosIni.x, PosIni.y);
+        bSink.setPos(PosIni.x, PosIni.y);
+    }
+
 }

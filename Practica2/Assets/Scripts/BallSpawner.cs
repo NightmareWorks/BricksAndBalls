@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BallSpawner : MonoBehaviour {
     public Ball ball;
-    private Vector3 tam;
     private Transform parent;
     //public int numBalls;
     // Use this for initialization
@@ -30,9 +29,6 @@ public class BallSpawner : MonoBehaviour {
     //Falta la dirección que van a tomar las bolas
     public void spawnBalls(uint numBalls, Vector2 direction) {
         StartCoroutine(spawnBallsCoroutine(numBalls, direction));
-    }
-    public void setScale(Vector3 tamX) {
-        tam = tamX;
     }
 
     public void setLaunchPos(float x, float y) {

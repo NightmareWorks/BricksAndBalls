@@ -37,6 +37,9 @@ public class BallSink : MonoBehaviour {
     {
         size = fakeBall.gameObject.GetComponent<SpriteRenderer>().size/2;
         _ballsArrived = LevelManager.instance.GetNumBalls();
+        allBallsArrived();
+        setNumBalls(_ballsArrived);
+        show();
     }
 
     //Gets the ball sink position
