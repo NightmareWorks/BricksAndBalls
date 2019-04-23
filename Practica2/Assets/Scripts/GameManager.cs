@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
     }

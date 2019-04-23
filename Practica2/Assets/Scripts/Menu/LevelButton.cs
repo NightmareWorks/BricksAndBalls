@@ -60,14 +60,12 @@ public class LevelButton : MonoBehaviour
     }
 
     //Sprites for the level button
-    [SerializeField]
-    private Sprite _lockedLevel;
-    [SerializeField]
-    private Sprite _unlockedLevel;
+    
+    public Sprite _lockedLevel;
+    public Sprite _unlockedLevel;
 
     //Sprites for the level score in case it's unlocked
-    [SerializeField]
-    private GameObject _star1, _star2, _star3;
+    public GameObject _star1, _star2, _star3;
 
     private bool _playable = false; //The level can be played already
     private uint _level; //Level number

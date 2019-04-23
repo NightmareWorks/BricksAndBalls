@@ -9,9 +9,10 @@ public class UIManager : MonoBehaviour
     public StarsUI StarsPuntuacion;
     public Button[] Powerupbuttons;
 
+    public Text[] PowerUpText;
+
     //Window to next level or menu
-    [SerializeField]
-    private GameObject _victoryPopUp;
+    public GameObject _victoryPopUp;
     private void Start()
     {
         UpdatePowerUpButtons();
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
                 Powerupbuttons[i].interactable = false;
             else
                 Powerupbuttons[i].interactable = true;
+            PowerUpText[i].text = "x" + PowerUp[i].ToString();
         }
     }
     public void activateMenuOnThrow() {

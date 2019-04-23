@@ -12,35 +12,32 @@ public class MenuManager : MonoBehaviour
     private Level[] _Levels;
 
     //Window to exit
-    [SerializeField]
-    private GameObject _exitPopUp;
+    public GameObject _exitPopUp;
 
     //Window to shop
-    [SerializeField]
-    private GameObject _shopPopUp;
-    [SerializeField]
-    private GameObject _cantBuyPop;
+    public GameObject _shopPopUp;
+    public GameObject _cantBuyPop;
 
     //Power ups ingame that can be purchased at the shop
     [SerializeField]
-    private Text _numEQ;
+    private Text _numEQ= null;
     private uint _numEarthQuakes;
     [SerializeField]
-    private Text _numDR;
+    private Text _numDR = null;
     private uint _numDeleteRow;
     [SerializeField]
-    private Text _AddBall;
+    private Text _AddBall = null;
     private uint _numAddBall;
     //Number of rubys and stars
     //These ints must be assigned at start()
     //Both can be updated after watching ads or finishing levels
     [SerializeField]
-    private Text _rubysTxtShop;
+    private Text _rubysTxtShop = null;
     [SerializeField]
-    private Text _rubysTxt;
+    private Text _rubysTxt = null;
     private uint _numRubys;
     [SerializeField]
-    private Text _starsTxt;
+    private Text _starsTxt = null;
     private uint _totalStars;
 
     /*

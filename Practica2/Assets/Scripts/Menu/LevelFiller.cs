@@ -5,8 +5,7 @@ using UnityEngine;
 public class LevelFiller : MonoBehaviour
 {
     //The level button prefab
-    [SerializeField]
-    private LevelButton _levelPrefab;
+    public LevelButton _levelPrefab;
 
     private Level[] _Levels;
     private MenuManager _menuManager;

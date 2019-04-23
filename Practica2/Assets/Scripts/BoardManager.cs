@@ -8,8 +8,7 @@ public class BoardManager : MonoBehaviour {
     //Matriz de bloques
     private List<Block> _board;
     private float tamX;
-    [SerializeField]
-    private ParticleSystem ParticleSystem;
+    public ParticleSystem ParticleSystem;
     private Vector3 posIni;
     bool levelFinished = false;
     // Use this for initialization
