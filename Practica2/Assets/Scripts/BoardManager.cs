@@ -28,19 +28,24 @@ public class BoardManager : MonoBehaviour {
         LevelManager.instance.IncrementPoints();
     }
     public bool StepForwardBlocks() {
+        bool danger = false;
+        bool dead = false;
+
         foreach (Block b in _board) {
             if (b.GetFall())
             {
                 b.SetPos(b.GetPosX(), b.GetPosY() - 1);
-                if (b.GetPosY() < 0)
+                if (!dead && b.GetPosY() < 0)
                 {
                     LevelManager.instance.ChangeState(LevelState.DEAD);
                     Debug.Log("DEAD");
+                    dead = true;
                 }
-                else if (b.GetPosY() == 0)
+                else if (!danger && b.GetPosY() == 0)
                 {
                     LevelManager.instance.ChangeState(LevelState.DANGER);
                     Debug.Log("DANGER");
+                    danger = true;
                 }
                 //Si la resta es menor se acaba el juego.
                 b.gameObject.transform.position = new Vector3(-posIni.x + b.GetPosX(), posIni.y + b.GetPosY(), 10);

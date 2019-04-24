@@ -6,22 +6,25 @@ using UnityEngine;
 public enum LevelState { PLAY, LAUNCHED, FAST, PAUSE, DANGER, DEAD, NEXT};
 public class LevelManager : MonoBehaviour {
     public static LevelManager instance = null;
-    private BallSpawner bSpawn;
-    private BallSink bSink;
+
     public DeathZone dZone;
     public Advertising adv;
     public TouchDetect tDetect;
     public UIManager UIManager;
-    private Vector3 PosIni = new Vector3(0,-6.5f,0);
 
     public uint stars = 0;
+
+    //Ball spawner and ballsink variables
+    private BallSpawner bSpawn;
+    private BallSink bSink;
+    private Vector3 PosIni = new Vector3(0,-6.5f,0);
+
 
     //The level manager has a pointer to each ball
     //in case it has to call destroyAllBalls() or allBallsToSink()
     private List<Ball> _balls = new List<Ball>();
 
     //////////////////////////////////////
-
 
     public bool changeLevel = false;
 
@@ -71,7 +74,7 @@ public class LevelManager : MonoBehaviour {
         bSink.Init();
         
         // 2.Se activa el detector de pulsación
-        tDetect.Init(bSpawn, 0.5f*7);
+        tDetect.Init(bSpawn, 6.5f);
 
         //Ponemos la máxima puntuación en función del número de bloques
         maxPuntuacion = boardManager.numTiles() * 35;

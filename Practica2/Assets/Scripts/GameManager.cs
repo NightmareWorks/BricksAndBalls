@@ -142,7 +142,10 @@ public class GameManager : MonoBehaviour
         return buy;
     }
     public void NextLevel() {
-        _levels[levelAct].star = LevelManager.instance.stars;
+        if (_levels[levelAct].star < LevelManager.instance.stars)
+        {
+            _levels[levelAct].star = LevelManager.instance.stars;
+        }
         levelAct++;
         if (levelAct > _maxLevel) _maxLevel = levelAct;
 
