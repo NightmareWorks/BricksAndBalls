@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class UIManager : MonoBehaviour
     public RectTransform menuPausa;
     public StarsUI StarsPuntuacion;
     public Button[] Powerupbuttons;
+    public Blink_Effect Warning;
 
     public Text[] PowerUpText;
 
@@ -63,5 +65,15 @@ public class UIManager : MonoBehaviour
     public void ResetStars() {
         LevelManager.instance.ResetPuntuacion();
         StarsPuntuacion.ResetStar();
+    }
+
+    internal void StartWarning()
+    {
+        Warning.Blink();
+    }
+
+    internal void Restart()
+    {
+        Warning.Init();
     }
 }

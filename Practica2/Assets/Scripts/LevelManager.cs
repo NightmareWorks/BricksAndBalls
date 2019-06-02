@@ -38,7 +38,12 @@ public class LevelManager : MonoBehaviour {
     private int maxPuntuacion;
 
     private int framesTurno = 0;
-    
+
+    internal LevelState GetState()
+    {
+        return State;
+    }
+
     //Total balls 
     private uint _numBalls;
 
@@ -63,7 +68,7 @@ public class LevelManager : MonoBehaviour {
         //Carga el txt del nivel seleccionado
         boardManager.SetLevel(Level);
 
-        // 1.Empieza el nivel y coloca el bSink y el bSpawn, se añade una estrella al score
+        //Empieza el nivel y coloca el bSink y el bSpawn, se añade una estrella al score
         bSink.hide();
         dZone.Init(bSink);
 
@@ -88,16 +93,15 @@ public class LevelManager : MonoBehaviour {
 
     internal void Earthquake()
     {
-        boardManager.Earthqueake();
+        boardManager.Earthquake();
     }
 
     private void Update()
     {
         if(State == LevelState.LAUNCHED) {
             float time = Time.frameCount;
-            if(Mathf.Abs(Time.frameCount - framesTurno) > 350) {
+            if(Mathf.Abs(Time.frameCount - framesTurno) > 350)
                 ChangeState(LevelState.FAST);
-            }
         }
     }
 
@@ -223,6 +227,7 @@ public class LevelManager : MonoBehaviour {
                 Time.timeScale = 0;
                 break;
             case LevelState.DANGER:
+                UIManager.StartWarning();
                 break;
             case LevelState.NEXT:
                 changeLevel = true;
@@ -231,7 +236,6 @@ public class LevelManager : MonoBehaviour {
                 UIManager.ResetStars();
                 RestartLevel();
                 break;
-
         }
     }
 
@@ -240,6 +244,7 @@ public class LevelManager : MonoBehaviour {
         Level = GameManager.instance.GetLevelAct();
         boardManager.DestroyBoard();
         boardManager.SetLevel(Level);
+        UIManager.Restart();
         ChangeState(LevelState.PLAY);
         changeLevel = false;
 
@@ -284,6 +289,8 @@ public class LevelManager : MonoBehaviour {
     public void DeactivateTouch() {
         tDetect.gameObject.SetActive(false);
     }
+
+
     public BoardManager GetBoardManager() {
         return boardManager;
     }

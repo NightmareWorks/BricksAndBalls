@@ -23,7 +23,6 @@ public class LevelButton : MonoBehaviour
             _star2.SetActive(false);
             _star1.SetActive(false);
             img.sprite = _lockedLevel;
-            //lvText.gameObject.SetActive(false);
             lvText.text = "";
         }
         else {

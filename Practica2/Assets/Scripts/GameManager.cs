@@ -14,6 +14,7 @@ public struct Level {
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
     //Advertisement component
     private Advertising _ads;
     public bool Activated = false;
@@ -141,6 +142,7 @@ public class GameManager : MonoBehaviour
         }
         return buy;
     }
+
     public void NextLevel() {
         if (_levels[levelAct].star < LevelManager.instance.stars)
         {

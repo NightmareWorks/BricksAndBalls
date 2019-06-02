@@ -88,7 +88,7 @@ public class BoardManager : MonoBehaviour {
         }*/
     }
 
-    internal void Earthqueake()
+    internal void Earthquake()
     {
         foreach (Block b in _board)
         {

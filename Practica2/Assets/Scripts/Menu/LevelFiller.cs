@@ -35,7 +35,6 @@ public class LevelFiller : MonoBehaviour
             newButton.init(i + 1, _Levels[i].playable, _Levels[i].star);
             if (_Levels[i].playable)
                 maxStars += _Levels[i].star;
-            //_menuManager.pushButton(newButton);
         }
         return maxStars;
     }

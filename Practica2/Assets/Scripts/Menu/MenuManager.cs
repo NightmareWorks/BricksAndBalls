@@ -8,7 +8,6 @@ public class MenuManager : MonoBehaviour
 
     //Component that fills the canvas with the level buttons
     private LevelFiller _lvFiller;
-    [SerializeField]
     private Level[] _Levels;
 
     //Window to exit
@@ -19,25 +18,22 @@ public class MenuManager : MonoBehaviour
     public GameObject _cantBuyPop;
 
     //Power ups ingame that can be purchased at the shop
-    [SerializeField]
-    private Text _numEQ= null;
+    public Text _numEQ = null;
     private uint _numEarthQuakes;
-    [SerializeField]
-    private Text _numDR = null;
+
+    public Text _numDR = null;
     private uint _numDeleteRow;
-    [SerializeField]
-    private Text _AddBall = null;
+
+    public Text _AddBall = null;
     private uint _numAddBall;
+
     //Number of rubys and stars
     //These ints must be assigned at start()
     //Both can be updated after watching ads or finishing levels
-    [SerializeField]
-    private Text _rubysTxtShop = null;
-    [SerializeField]
-    private Text _rubysTxt = null;
+    public Text _rubysTxtShop = null;
+    public Text _rubysTxt = null;
     private uint _numRubys;
-    [SerializeField]
-    private Text _starsTxt = null;
+    public Text _starsTxt = null;
     private uint _totalStars;
 
     /*
@@ -52,6 +48,7 @@ public class MenuManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
     }
+
     private void Start()
     {
         if (GameManager.instance.Activated)
@@ -121,14 +118,18 @@ public class MenuManager : MonoBehaviour
     {
         _cantBuyPop.SetActive(false);
     }
+    ///////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// POWER UPS purchase
+    /// </summary>
+    //////////////////////////////////////////////////////////////////////////
 
     public void BuyEarthquackes()
     {
         if (GameManager.instance.BuyPowerUp(PowerUp.EARTHQUACKE))
         {
-            _numRubys = GameManager.instance.GetRubies();
-            _rubysTxt.text = _numRubys.ToString();
-            _rubysTxtShop.text = _numRubys.ToString();
+            //Gets rubys and powerup num
+            RefreshRubies();
             _numEarthQuakes = GameManager.instance.GetNumPowerUp(PowerUp.EARTHQUACKE);
             _numEQ.text = _numEarthQuakes.ToString();
         }
@@ -137,13 +138,12 @@ public class MenuManager : MonoBehaviour
             _cantBuyPop.SetActive(true);
         }
     }
+
     public void BuyDeleteRow()
     {
         if (GameManager.instance.BuyPowerUp(PowerUp.DELETE))
         {
-            _numRubys = GameManager.instance.GetRubies();
-            _rubysTxt.text = _numRubys.ToString();
-            _rubysTxtShop.text = _numRubys.ToString();
+            RefreshRubies();
             _numDeleteRow = GameManager.instance.GetNumPowerUp(PowerUp.DELETE);
             _numDR.text = _numDeleteRow.ToString();
         }
@@ -157,9 +157,7 @@ public class MenuManager : MonoBehaviour
     {
         if (GameManager.instance.BuyPowerUp(PowerUp.EXTRABALL))
         {
-            _numRubys = GameManager.instance.GetRubies();
-            _rubysTxt.text = _numRubys.ToString();
-            _rubysTxtShop.text = _numRubys.ToString();
+            RefreshRubies();
             _numAddBall = GameManager.instance.GetNumPowerUp(PowerUp.EXTRABALL);
             _AddBall.text = _numAddBall.ToString();
         }
@@ -167,6 +165,12 @@ public class MenuManager : MonoBehaviour
         {
             _cantBuyPop.SetActive(true);
         }
+    }
+
+    private void RefreshRubies() {
+        _numRubys = GameManager.instance.GetRubies();
+        _rubysTxt.text = _numRubys.ToString();
+        _rubysTxtShop.text = _numRubys.ToString();
     }
     //////////////////////////////////////
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,50 +13,63 @@ public class Block : MonoBehaviour {
     [Tooltip("Vida")]
     public TextMesh txt;
     private AudioSource audioSource;
-
     private BoardManager boardManager;
+    private Logica BlockLogic;
 
 	// Use this for initialization
 	void Start () {
         audioSource = GetComponent<AudioSource>();
         boardManager = LevelManager.instance.GetBoardManager();
     }
+
     public bool GetFall() { return fall; }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         audioSource.Play();
-        --_life;
-        if (_life <= 0) {
-            Logic(collision.gameObject);
+        if (--_life <= 0) {
+            BlockLogic.LogicCollision(collision.gameObject);
             boardManager.DeleteTile(this);
         }
         else
             txt.text = _life.ToString();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        BlockLogic.LogicTrigger(other.gameObject);
+    }
+
     public void SetType(int type) {
         _type = type;
-
         Sprite myBlock = Resources.Load("Images/game_img_block" + type + "_1", typeof(Sprite)) as Sprite;
+        SetLogic();
         gameObject.GetComponent<SpriteRenderer>().sprite = myBlock;
         gameObject.AddComponent<PolygonCollider2D>();
-        switch (_type)
-        {
-            case 10:
-            case 20:
-                fall = false;
+    }
+
+    private void SetLogic()
+    {
+        switch (_type) {
+            case 1:
+                BlockLogic = gameObject.AddComponent(Type.GetType("Logica1")) as Logica;
                 break;
             default:
+                BlockLogic = gameObject.AddComponent(Type.GetType("Logica1")) as Logica;
                 break;
         }
     }
+
     public void SubstractLife(int life) {
         audioSource.Play();
         _life -= life;
         txt.text = _life.ToString();
     }
+
     public int GetLife() {
         return _life;
-     }
+    }
+
     public void SetLife(int life)
     {
         _life = life;
@@ -68,24 +82,29 @@ public class Block : MonoBehaviour {
         }
 
     }
+
     public void SetPos(int x, int y) {
         posX = x;
         posY = y;
         mask();
     }
+
     public void invertPosY(int y)
     {
         posY = y-posY;
         mask();
     }
+
     public int GetPosX()
     {
         return posX;
     }
+
     public int GetPosY()
     {
         return posY;
     }
+
     private void mask() {
         if (posY > 11)
         {
@@ -96,7 +115,9 @@ public class Block : MonoBehaviour {
             gameObject.SetActive(true);
         }
     }
-    public void Logic(GameObject gameObject) {
+
+    /*public void Logic(GameObject gameObject) {
+        LogicBlok.LogicaPaso();
         switch (_type)
         {
             case 21:
@@ -112,5 +133,5 @@ public class Block : MonoBehaviour {
                 gameObject.GetComponent<Ball>().ChangeDirX();
                 break;
         }
-    }
+    }*/
 }

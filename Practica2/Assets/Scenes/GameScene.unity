@@ -460,48 +460,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1001 &139321046
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4655621138984790, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -46.229996
-      objectReference: {fileID: 0}
-    - target: {fileID: 4655621138984790, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -91.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 4655621138984790, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4655621138984790, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4655621138984790, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4655621138984790, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4655621138984790, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4655621138984790, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 788d55ced8d9e42dabda97a8309d0ceb, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &152610960
 GameObject:
   m_ObjectHideFlags: 0
@@ -3471,6 +3429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1018449289}
   - component: {fileID: 1018449288}
+  - component: {fileID: 1018449290}
   m_Layer: 0
   m_Name: gravity_warning
   m_TagString: Untagged
@@ -3531,12 +3490,23 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1018449287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -6.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.04, y: -6.566, z: 0}
+  m_LocalScale: {x: 1, y: 0.690224, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1018449290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1018449287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1df4494d72ace4549ba9726df1ee9c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1139944755
 GameObject:
   m_ObjectHideFlags: 0
@@ -5610,6 +5580,7 @@ MonoBehaviour:
   - {fileID: 1161134626}
   - {fileID: 674241515}
   - {fileID: 1795416317}
+  Warning: {fileID: 1018449290}
   PowerUpText:
   - {fileID: 774982268}
   - {fileID: 495828945}
