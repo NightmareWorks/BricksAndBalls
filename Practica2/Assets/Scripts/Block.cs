@@ -34,18 +34,17 @@ public class Block : MonoBehaviour {
         else
             txt.text = _life.ToString();
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        BlockLogic.LogicTrigger(other.gameObject);
+        BlockLogic.LogicTrigger(collision.gameObject);
     }
 
     public void SetType(int type) {
         _type = type;
         Sprite myBlock = Resources.Load("Images/game_img_block" + type + "_1", typeof(Sprite)) as Sprite;
-        SetLogic();
         gameObject.GetComponent<SpriteRenderer>().sprite = myBlock;
         gameObject.AddComponent<PolygonCollider2D>();
+        SetLogic();
     }
 
     private void SetLogic()
@@ -53,6 +52,15 @@ public class Block : MonoBehaviour {
         switch (_type) {
             case 1:
                 BlockLogic = gameObject.AddComponent(Type.GetType("Logica1")) as Logica;
+                break;
+            case 21:
+            case 22:
+            case 23:
+                BlockLogic = gameObject.AddComponent(Type.GetType("Logica21")) as Logica;
+                BlockLogic.Initialize(_type);
+                break;
+            case 24:
+                BlockLogic = gameObject.AddComponent(Type.GetType("Logica24")) as Logica;
                 break;
             default:
                 BlockLogic = gameObject.AddComponent(Type.GetType("Logica1")) as Logica;
@@ -80,6 +88,7 @@ public class Block : MonoBehaviour {
         {
             txt.text = _life.ToString();
         }
+        gameObject.GetComponent<SpriteRenderer>().color += new Color(_life*3,_life*3,_life*3);
 
     }
 

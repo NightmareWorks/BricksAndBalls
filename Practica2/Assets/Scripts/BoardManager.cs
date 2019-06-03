@@ -11,27 +11,26 @@ public class BoardManager : MonoBehaviour {
     public ParticleSystem ParticleSystem;
     private Vector3 posIni;
     bool levelFinished = false;
-    // Use this for initialization
-    void Start () {
-    }
 
-    // Update is called once per frame
-    void Update () {
-        if (!levelFinished && _board.Count == 0) {
-            LevelManager.instance.ChangeState(LevelState.NEXT);
-        }
-	}
     public void DeleteTile(Block b) {
         _board.Remove(b);
-        Instantiate(ParticleSystem,b.transform.position,Quaternion.identity);
+        ParticleSystem particles = Instantiate(ParticleSystem,b.transform.position,Quaternion.identity);
+        Destroy(particles.gameObject, 0.4f);
+
         Destroy(b.gameObject);
+
         LevelManager.instance.IncrementPoints();
+        if (_board.Count == 0)
+        {
+            LevelManager.instance.ChangeState(LevelState.NEXT);
+        }
     }
     public bool StepForwardBlocks() {
         bool danger = false;
         bool dead = false;
 
-        foreach (Block b in _board) {
+        foreach (Block b in _board)
+        {
             if (b.GetFall())
             {
                 b.SetPos(b.GetPosX(), b.GetPosY() - 1);
@@ -51,6 +50,7 @@ public class BoardManager : MonoBehaviour {
                 b.gameObject.transform.position = new Vector3(-posIni.x + b.GetPosX(), posIni.y + b.GetPosY(), 10);
             }
         }
+        
         return true;
     }
 
@@ -92,7 +92,6 @@ public class BoardManager : MonoBehaviour {
     {
         foreach (Block b in _board)
         {
-            //if(b!=null)
             b.SubstractLife(GameManager.instance.r.Next(b.GetLife()));
         }
     }
