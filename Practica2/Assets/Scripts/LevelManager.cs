@@ -36,6 +36,7 @@ public class LevelManager : MonoBehaviour {
     private int Puntuacion = 0;
     private int PAcumulado = 10;
     private int maxPuntuacion;
+    private int _powerUpBalls = 0;
 
     private int framesTurno = 0;
 
@@ -86,6 +87,14 @@ public class LevelManager : MonoBehaviour {
         UIManager.InitPuntuacion(maxPuntuacion);
 	}
 
+    internal void PowerUpNewBall()
+    {
+        _numBalls++;
+        _powerUpBalls++;
+        bSink.setNumBalls(_numBalls);
+        bSink.allBallsArrived();
+    }
+
     internal void DeleteRow()
     {
         boardManager.DeleteRow();
@@ -95,6 +104,7 @@ public class LevelManager : MonoBehaviour {
     {
         boardManager.Earthquake();
     }
+
 
     private void Update()
     {
@@ -190,6 +200,9 @@ public class LevelManager : MonoBehaviour {
     //Called from the death zone when the last ball arrives
     public void OnLastBallArrived() {
         _numBalls += ballWait;
+        _numBalls -= (uint)_powerUpBalls;
+        _powerUpBalls = 0;
+
         ballWait = 0;
         bSink.setNumBalls(_numBalls);
 
@@ -233,8 +246,7 @@ public class LevelManager : MonoBehaviour {
                 changeLevel = true;
                 break;
             case LevelState.DEAD:
-                UIManager.ResetStars();
-                RestartLevel();
+                UIManager.DefeatPopUp();
                 break;
         }
     }
@@ -301,7 +313,6 @@ public class LevelManager : MonoBehaviour {
 
     public void AddStar() {
         stars++;
-        Debug.Log("Añado estrella " + stars);
     }
     private void ResetBallAndSinkPos()
     {

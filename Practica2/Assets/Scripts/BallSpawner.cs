@@ -11,20 +11,6 @@ public class BallSpawner : MonoBehaviour {
         parent = new GameObject("Balls").transform;
     }
 
-    // Update is called once per frame
-    /*void Update () {
-
-
-        //Intento chusco
-        if (Input.GetKeyUp(KeyCode.C))
-        {
-            //ball1.GetComponent<Ball>().startMove();
-        }
-        else if (Input.GetKeyUp(KeyCode.V))
-        {
-            //ball2.GetComponent<Ball>().startMove();
-        }
-    }*/
 
     //Falta la dirección que van a tomar las bolas
     public void spawnBalls(uint numBalls, Vector2 direction) {
@@ -32,7 +18,6 @@ public class BallSpawner : MonoBehaviour {
     }
 
     public void setLaunchPos(float x, float y) {
-        //Vector2 size = ball.GetComponent<SpriteRenderer>().size/2;
         posX = x; posY = y;
     }
     public void setLaunchPosX(float x)

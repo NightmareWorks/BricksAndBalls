@@ -17,17 +17,42 @@ public class Logica1: Logica {
     }
     public override void LogicCollision(GameObject collision) {
         base.LogicCollision(collision);
-        Debug.Log("HOLA HE FUNCIONADO :D");
     }
     public override void LogicTrigger(GameObject other)
     {
         base.LogicTrigger(other);
     }
 }
+//Triangles Logic
+//It's the same for block 3,4,5,6
 
+public class Logica3 : Logica
+{
+
+    public override void Initialize(int type)
+    {
+        TextMesh mesh= GetComponentInChildren<TextMesh>();
+        switch (type) {
+            case 3:
+                mesh.anchor = TextAnchor.UpperRight;
+                break;
+            case 4:
+                mesh.anchor = TextAnchor.UpperLeft;
+                break;
+            case 5:
+                mesh.anchor = TextAnchor.LowerLeft;
+                break;
+            case 6:
+                mesh.anchor = TextAnchor.LowerRight;
+                break;
+
+        }
+    
+    }
+}
 //Block that adds a ball once you hit it
 // It's the same for block 21, 22, 23
-public class Logica21 : Logica
+    public class Logica21 : Logica
 {
     int numBall;
     public override void Initialize(int type)

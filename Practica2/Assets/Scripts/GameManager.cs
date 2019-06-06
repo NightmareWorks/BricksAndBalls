@@ -69,7 +69,12 @@ public class GameManager : MonoBehaviour
                 case PowerUp.EARTHQUACKE:
                     LevelManager.instance.Earthquake();
                     break;
-            
+                case PowerUp.DELETE:
+                    LevelManager.instance.DeleteRow();
+                    break;
+                case PowerUp.EXTRABALL:
+                    LevelManager.instance.PowerUpNewBall();
+                    break;
             }
             powerUps[(int)powerUp]--;
         }

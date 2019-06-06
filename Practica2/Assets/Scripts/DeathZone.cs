@@ -62,11 +62,6 @@ public class DeathZone : MonoBehaviour {
             }
         }
 
-        //If the ball is being moved by the button
-        /*else if (!thisBall.IsMovedByPhysics()) {
-            _bSink.show();
-            Debug.Log("!!!!!Me trae el boton!!!");
-        }*/
     }
 
     public bool firstOne = true;

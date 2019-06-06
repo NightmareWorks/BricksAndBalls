@@ -37,13 +37,11 @@ public class BoardManager : MonoBehaviour {
                 if (!dead && b.GetPosY() < 0)
                 {
                     LevelManager.instance.ChangeState(LevelState.DEAD);
-                    Debug.Log("DEAD");
                     dead = true;
                 }
                 else if (!danger && b.GetPosY() == 0)
                 {
                     LevelManager.instance.ChangeState(LevelState.DANGER);
-                    Debug.Log("DANGER");
                     danger = true;
                 }
                 //Si la resta es menor se acaba el juego.
@@ -70,22 +68,22 @@ public class BoardManager : MonoBehaviour {
 
     internal void DeleteRow()
     {
-        /*List<Block> aux = new List<Block>();
+        List<Block> aux = new List<Block>();
         bool changeLine = false;
-        int i = 0;
-        int line = _board[0].GetPosY();
-        while (!changeLine) {
+        int i = _board.Count-1;
+        int line = _board[i].GetPosY();
+        while (!changeLine && i!=0) {
             if(line != _board[i].GetPosY()) {
                 changeLine = true;
             }
             else {
                 aux.Add(_board[i]);
             }
-            i++;
+            i--;
         }
         foreach(Block b in aux) {
             DeleteTile(b);
-        }*/
+        }
     }
 
     internal void Earthquake()

@@ -27,12 +27,16 @@ public class Block : MonoBehaviour {
     private void OnCollisionExit2D(Collision2D collision)
     {
         audioSource.Play();
-        if (--_life <= 0) {
+        if (--_life <= 0)
+        {
             BlockLogic.LogicCollision(collision.gameObject);
             boardManager.DeleteTile(this);
         }
         else
+        {
             txt.text = _life.ToString();
+            UpdateColor();
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -53,6 +57,13 @@ public class Block : MonoBehaviour {
             case 1:
                 BlockLogic = gameObject.AddComponent(Type.GetType("Logica1")) as Logica;
                 break;
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                BlockLogic = gameObject.AddComponent(Type.GetType("Logica3")) as Logica;
+                BlockLogic.Initialize(_type);
+                break;
             case 21:
             case 22:
             case 23:
@@ -72,6 +83,7 @@ public class Block : MonoBehaviour {
         audioSource.Play();
         _life -= life;
         txt.text = _life.ToString();
+        UpdateColor();
     }
 
     public int GetLife() {
@@ -88,10 +100,12 @@ public class Block : MonoBehaviour {
         {
             txt.text = _life.ToString();
         }
-        gameObject.GetComponent<SpriteRenderer>().color += new Color(_life*3,_life*3,_life*3);
+        UpdateColor();
+    }
+    private void UpdateColor() {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f - ((_life % 100) / 100.0f), 1.0f - ((_life % 100) / 100.0f), 1.0f - ((_life % 100) / 100.0f));
 
     }
-
     public void SetPos(int x, int y) {
         posX = x;
         posY = y;
@@ -114,7 +128,8 @@ public class Block : MonoBehaviour {
         return posY;
     }
 
-    private void mask() {
+    private void mask()
+    {
         if (posY > 11)
         {
             gameObject.SetActive(false);
@@ -124,23 +139,4 @@ public class Block : MonoBehaviour {
             gameObject.SetActive(true);
         }
     }
-
-    /*public void Logic(GameObject gameObject) {
-        LogicBlok.LogicaPaso();
-        switch (_type)
-        {
-            case 21:
-                LevelManager.instance.AddNewBall(1);
-                break;
-            case 22:
-                LevelManager.instance.AddNewBall(2);
-                break;
-            case 23:
-                LevelManager.instance.AddNewBall(3);
-                break;
-            case 24:
-                gameObject.GetComponent<Ball>().ChangeDirX();
-                break;
-        }
-    }*/
 }

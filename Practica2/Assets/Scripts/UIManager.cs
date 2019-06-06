@@ -9,12 +9,13 @@ public class UIManager : MonoBehaviour
     public RectTransform menuPausa;
     public StarsUI StarsPuntuacion;
     public Button[] Powerupbuttons;
-    public Blink_Effect Warning;
+    public GameObject Warning;
 
     public Text[] PowerUpText;
 
     //Window to next level or menu
     public GameObject _victoryPopUp;
+    public GameObject _defeatPopUp;
     private void Start()
     {
         UpdatePowerUpButtons();
@@ -48,9 +49,9 @@ public class UIManager : MonoBehaviour
         StarsPuntuacion.OnValueChanged(Puntuacion);
     }
 
-    public void TogglePausaMenu()
+    public void TogglePausaMenu(bool active)
     {
-        menuPausa.gameObject.SetActive(!menuPausa.gameObject.activeSelf);
+        menuPausa.gameObject.SetActive(active);
     }
 
     //Callback called when level is finished
@@ -62,6 +63,19 @@ public class UIManager : MonoBehaviour
     {
         _victoryPopUp.SetActive(false);
     }
+
+    //Callback called when level is finished
+    public void DefeatPopUp()
+    {
+        LevelManager.instance.DeactivateTouch();
+        _defeatPopUp.SetActive(true);
+    }
+
+    public void HideDefeatPopUp()
+    {
+        _defeatPopUp.SetActive(false);
+    }
+
     public void ResetStars() {
         LevelManager.instance.ResetPuntuacion();
         StarsPuntuacion.ResetStar();
@@ -69,11 +83,12 @@ public class UIManager : MonoBehaviour
 
     internal void StartWarning()
     {
-        Warning.Blink();
+        Warning.SetActive(true);
     }
 
     internal void Restart()
     {
-        Warning.Init();
+        ResetStars();
+        Warning.SetActive(false);
     }
 }

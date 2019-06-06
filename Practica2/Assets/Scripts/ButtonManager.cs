@@ -9,34 +9,39 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class ButtonManager : MonoBehaviour
 {
+    UIManager uIManager;
+    private void Start()
+    {
+        uIManager = GetComponent<UIManager>();
+    }
     public void Pause()
     {
-        GetComponent<UIManager>().TogglePausaMenu();
+        uIManager.TogglePausaMenu(true);
         LevelManager.instance.ChangeState(LevelState.PAUSE);
     }
 
     public void Play() {
-        GetComponent<UIManager>().TogglePausaMenu();
+        uIManager.TogglePausaMenu(false);
         LevelManager.instance.ChangeState(LevelState.PLAY);
         LevelManager.instance.ActivateTouch();
     }
 
     public void Restart() {
+        uIManager.HideDefeatPopUp();
+        uIManager.Restart();
         LevelManager.instance.RestartLevel();
-        GetComponent<UIManager>().ResetStars();
         Play();
     }
 
     public void BackToMenu() {
         SceneManager.LoadScene(0);
-        Debug.Log("Vuelvo a cargar el menu");
     }
 
     public void GoToNextLevel() {
         Debug.Log("Al siguiente niv");
-        GetComponent<UIManager>().hideVictoryPopUp();
+        uIManager.hideVictoryPopUp();
         GameManager.instance.NextLevel();
-        GetComponent<UIManager>().ResetStars();
+        uIManager.ResetStars();
     }
 
     public void BackToSink() {
@@ -46,12 +51,19 @@ public class ButtonManager : MonoBehaviour
 
     public void UseEarthquacke() {
         GameManager.instance.UsePowerUp(PowerUp.EARTHQUACKE);
-        GetComponent<UIManager>().UpdatePowerUpButtons();
+        uIManager.UpdatePowerUpButtons();
+        Camera.main.GetComponent<Animator>().SetTrigger("Earthquacke");
+    }
+
+    public void UseAddBall()
+    {
+        GameManager.instance.UsePowerUp(PowerUp.EXTRABALL);
+        uIManager.UpdatePowerUpButtons();
     }
 
     public void UseDeleteRow()
     {
         GameManager.instance.UsePowerUp(PowerUp.DELETE);
-        GetComponent<UIManager>().UpdatePowerUpButtons();
+        uIManager.UpdatePowerUpButtons();
     }
 }

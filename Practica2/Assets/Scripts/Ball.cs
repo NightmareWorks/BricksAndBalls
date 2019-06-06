@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour {
 
+    private Rigidbody2D rb;
+    bool moving= false;
+    int wait = 0;
 
-    // Use this for initialization
-    /*void Start () {
-    }*/
-
-    // Update is called once per frame
-    /*void Update () {
-		
-	}*/
     public void enableCollision()
     {
         if (rb != null)
@@ -36,13 +31,16 @@ public class Ball : MonoBehaviour {
     }
 
     public void startMove(Vector2 posIni, Vector2 speed) {
-        transform.position/*.Set(posIni.x, posIni.y, 0);*/
-            = new Vector3(posIni.x, posIni.y, 0);
-        rb.AddForce(/*new Vector2(5,50)*/speed);
+        transform.position = new Vector3(posIni.x, posIni.y, 0);
+        rb.AddForce(speed);
+        moving = true;
+
     }
 
     public void Stop() {
         rb.velocity = Vector3.zero;
+        moving = false;
+        wait = 0;
     }
 
     public void MoveToPoint(Vector2 position, uint numPasos, System.Action callback = null)
@@ -65,13 +63,20 @@ public class Ball : MonoBehaviour {
         return rb.velocity.y < 0;
     }
 
-    public bool IsMovedByPhysics() {
-        return rb.velocity.y != 0;
-    }
     public void ChangeDirX() {
         float a = GameManager.instance.r.Next((int)-rb.velocity.x*10, (int)rb.velocity.x*10);
         rb.velocity = new Vector2( a / 10, rb.velocity.y);
     }
 
-    private Rigidbody2D rb;
+    private void Update()
+    {
+        if (moving)
+        {
+            wait++;
+            if (wait % 60 == 0 && Mathf.Abs(rb.velocity.y) <= 0.000001)
+            {
+                rb.AddForce(new Vector2(0, 10));
+            }
+        }
+    }
 }
