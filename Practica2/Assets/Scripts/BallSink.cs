@@ -47,8 +47,8 @@ public class BallSink : MonoBehaviour {
 
     //Sets it
     public void setPos(float x, float y) {
-        pos = new Vector2(x, y+size.y);
-        //fakeBall.gameObject.transform.position = new Vector3(pos.x, pos.y, 0);
+        pos = new Vector2(x, y);
+        fakeBall.gameObject.transform.position = new Vector3(pos.x, pos.y, 0);
     }
 
     public void setPosX(float x)

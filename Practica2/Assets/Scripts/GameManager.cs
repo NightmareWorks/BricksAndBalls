@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
         {
             //Assigns the numbers for the power ups
             powerUps[(uint)PowerUp.EARTHQUACKE] = 0;
+            powerUps[(uint)PowerUp.EXTRABALL] = 0;
+            powerUps[(uint)PowerUp.DELETE] = 0;
             _levels[0].playable = true;
             _levels[0].star = 0;
         }
@@ -93,6 +95,10 @@ public class GameManager : MonoBehaviour
     public void ExitApp() {
         SaveManager.Instance.Save();
         Application.Quit();
+    }
+    public void OnApplicationQuit()
+    {
+        SaveManager.Instance.Save();
     }
 
     //This is called from the menuManager to get 
@@ -148,7 +154,7 @@ public class GameManager : MonoBehaviour
         return buy;
     }
 
-    public void NextLevel() {
+    public void UnlockLevel() {
         if (_levels[levelAct].star < LevelManager.instance.stars)
         {
             _levels[levelAct].star = LevelManager.instance.stars;
@@ -159,6 +165,9 @@ public class GameManager : MonoBehaviour
         //ACTUALIZA EL NIVEL DESBLOQUEADO
         _levels[levelAct].playable = true;
         SaveManager.Instance.Save();
+    }
+
+    public void NextLevel() {
         LevelManager.instance.NextLevel();
     }
     public void LoadLevel(uint _level, bool menu = false) {

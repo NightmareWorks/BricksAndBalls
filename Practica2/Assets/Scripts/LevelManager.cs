@@ -217,7 +217,8 @@ public class LevelManager : MonoBehaviour {
         PAcumulado = 10;
         if (changeLevel)
         {
-            SaveManager.Instance.Save();
+            GameManager.instance.UnlockLevel();
+            //SaveManager.Instance.Save();
             UIManager.VictoryPopUp();
             DeactivateTouch();
         }
@@ -318,6 +319,10 @@ public class LevelManager : MonoBehaviour {
     {
         bSpawn.setLaunchPos(PosIni.x, PosIni.y);
         bSink.setPos(PosIni.x, PosIni.y);
+    }
+
+    public void StopWarning() {
+        UIManager.StopWarning();
     }
 
 }

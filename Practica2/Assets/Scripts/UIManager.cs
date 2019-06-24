@@ -85,10 +85,15 @@ public class UIManager : MonoBehaviour
     {
         Warning.SetActive(true);
     }
+    public void StopWarning()
+    {
+        Warning.SetActive(false);
+    }
 
     internal void Restart()
     {
         ResetStars();
         Warning.SetActive(false);
     }
+
 }

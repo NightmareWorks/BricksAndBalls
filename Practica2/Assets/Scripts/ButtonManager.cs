@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 /// <summary>
 /// This component contains the callbacks of all the 
 /// gameScene buttons
@@ -65,5 +66,10 @@ public class ButtonManager : MonoBehaviour
     {
         GameManager.instance.UsePowerUp(PowerUp.DELETE);
         uIManager.UpdatePowerUpButtons();
+    }
+
+    public void VolumeSlider(float i)
+    {
+        AudioListener.volume = i;
     }
 }

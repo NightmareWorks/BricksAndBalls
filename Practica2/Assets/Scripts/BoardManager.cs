@@ -28,7 +28,6 @@ public class BoardManager : MonoBehaviour {
     public bool StepForwardBlocks() {
         bool danger = false;
         bool dead = false;
-
         foreach (Block b in _board)
         {
             if (b.GetFall())
@@ -47,6 +46,9 @@ public class BoardManager : MonoBehaviour {
                 //Si la resta es menor se acaba el juego.
                 b.gameObject.transform.position = new Vector3(-posIni.x + b.GetPosX(), posIni.y + b.GetPosY(), 10);
             }
+        }
+        if (!danger) {
+            LevelManager.instance.StopWarning();
         }
         
         return true;

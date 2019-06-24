@@ -8,12 +8,15 @@ public class SaveManager : MonoBehaviour
     public SaveState state;
     public static SaveManager Instance { set; get; }
     public bool hasStateSaved = false;
+    [Tooltip("Variable nos permite reiniciar el archivo guardado")] 
+    public bool resetSaveState = false;
     private void Awake()
     {
-        //ResetSave();
+        if(resetSaveState)
+            ResetSave();
         Instance = this;
         Load();
-        Debug.Log(Helper.Deserialize<SaveState>(Helper.Decrypt(PlayerPrefs.GetString("save"))));
+        Debug.Log(Helper.Deserialize<SaveState>(Helper.Decrypt(PlayerPrefs.GetString("saveGr10"))));
 
     }
     public void Save() {
@@ -22,14 +25,14 @@ public class SaveManager : MonoBehaviour
         state.PowerUps = GameManager.instance.GetPowerUp();
         state.maxLevel = GameManager.instance.GetMaxLevel();
 
-        PlayerPrefs.SetString("save", Helper.Encrypt(Helper.Serialize<SaveState>(state)));
+        PlayerPrefs.SetString("saveGr10", Helper.Encrypt(Helper.Serialize<SaveState>(state)));
     }
 
     public void Load()
     {
-        if (PlayerPrefs.HasKey("save")) {
+        if (PlayerPrefs.HasKey("saveGr10")) {
             hasStateSaved = true;
-            state = Helper.Deserialize<SaveState>(Helper.Decrypt(PlayerPrefs.GetString("save")));
+            state = Helper.Deserialize<SaveState>(Helper.Decrypt(PlayerPrefs.GetString("saveGr10")));
         }else {
             state = new SaveState();
             Save();
@@ -38,7 +41,7 @@ public class SaveManager : MonoBehaviour
     }
     public void ResetSave()
     {
-        PlayerPrefs.DeleteKey("save");
+        PlayerPrefs.DeleteKey("saveGr10");
     }
 
     public uint PowerUp(PowerUp powerUp) { 
